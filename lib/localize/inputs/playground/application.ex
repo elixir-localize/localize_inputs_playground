@@ -1,6 +1,6 @@
-defmodule LocalizeInputsPlayground.Application do
+defmodule Localize.Inputs.Playground.Application do
   @moduledoc """
-  OTP Application that runs `LocalizeInputsPlayground.Visualizer` as a
+  OTP Application that runs `Localize.Inputs.Playground.Visualizer` as a
   supervised Bandit web server.
 
   Reads configuration from `config/runtime.exs`:
@@ -20,14 +20,14 @@ defmodule LocalizeInputsPlayground.Application do
         port = Application.get_env(:localize_inputs_playground, :port, 8080)
         ip = Application.get_env(:localize_inputs_playground, :ip, {0, 0, 0, 0})
 
-        [{Bandit, plug: LocalizeInputsPlayground.Router, port: port, ip: ip}]
+        [{Bandit, plug: Localize.Inputs.Playground.Router, port: port, ip: ip}]
       else
         []
       end
 
     Supervisor.start_link(children,
       strategy: :one_for_one,
-      name: LocalizeInputsPlayground.Supervisor
+      name: Localize.Inputs.Playground.Supervisor
     )
   end
 end

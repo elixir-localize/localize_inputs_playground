@@ -1,6 +1,6 @@
-defmodule LocalizeInputsPlayground.VisualizerDisabledError do
+defmodule Localize.Inputs.Playground.VisualizerDisabledError do
   @moduledoc """
-  Raised by `LocalizeInputsPlayground.Visualizer.Standalone.start/1` when
+  Raised by `Localize.Inputs.Playground.Visualizer.Standalone.start/1` when
   the visualizer hasn't been opted into.
 
   The visualizer is a development tool. To keep it from
@@ -23,7 +23,7 @@ defmodule LocalizeInputsPlayground.VisualizerDisabledError do
 
   @impl true
   def message(%__MODULE__{}) do
-    "LocalizeInputsPlayground.Visualizer is disabled. Set " <>
+    "Localize.Inputs.Playground.Visualizer is disabled. Set " <>
       "`config :localize_inputs_playground, visualizer: true` or pass " <>
       "`enabled: true` to start/1."
   end

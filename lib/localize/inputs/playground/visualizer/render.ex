@@ -1,6 +1,6 @@
 if Code.ensure_loaded?(Gettext.Backend) do
-  defmodule LocalizeInputsPlayground.Visualizer.Render do
-    use Localize.Message.Sigils, backend: LocalizeInputsPlayground.Gettext
+  defmodule Localize.Inputs.Playground.Visualizer.Render do
+    use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
     # Shared HTML helpers for the visualizer. Pure functions,
@@ -37,13 +37,24 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
         "<title>",
         escape(title),
-        " — LocalizeInputsPlayground.Visualizer</title>",
+        " — Localize.Inputs.Playground.Visualizer</title>",
         "<link rel=\"stylesheet\" href=\"",
         escape(base),
         "/assets/localize_inputs.css\">",
         "<link rel=\"stylesheet\" href=\"",
         escape(base),
         "/assets/style.css\">",
+        "<link rel=\"icon\" type=\"image/png\" href=\"",
+        escape(base),
+        "/assets/logo.png\">",
+        # iOS Safari uses this for home-screen shortcuts. We don't
+        # rely on the unprompted /apple-touch-icon.png fetch alone
+        # because that only works when the visualizer is mounted
+        # at the host root; mounted under a subpath, the explicit
+        # href is what tells iOS where to look.
+        "<link rel=\"apple-touch-icon\" href=\"",
+        escape(base),
+        "/assets/logo.png\">",
         theme_init_script(),
         "</head><body>",
         header(active, base),
@@ -71,8 +82,11 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<a class=\"li-brand\" href=\"",
         escape(base),
         "/\">",
+        "<img class=\"li-logo\" src=\"",
+        escape(base),
+        "/assets/logo.png\" alt=\"\" width=\"40\" height=\"40\">",
         "<div class=\"li-brand-text\">",
-        "<h1>LocalizeInputsPlayground.Visualizer</h1>",
+        "<h1>Localize.Inputs.Playground.Visualizer</h1>",
         "<p>" <>
           escape(~t"locale-aware number input — try how it behaves across locales") <> "</p>",
         "</div>",
@@ -110,7 +124,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       [
         "<footer class=\"li-footer\">",
         "<p>",
-        ~t"Headless API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Locale</code>.",
+        ~t"Headless API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Number</code>.",
         "</p>",
         "</footer>"
       ]

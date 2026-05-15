@@ -1,11 +1,11 @@
 if Code.ensure_loaded?(Plug.Router) do
-  defmodule LocalizeInputsPlayground.Visualizer do
+  defmodule Localize.Inputs.Playground.Visualizer do
     @moduledoc """
     A web-based visualizer for `Localize.Inputs`.
 
     `Plug.Router` that can be mounted inside a Phoenix or Plug
     application, or run standalone during development via
-    `LocalizeInputsPlayground.Visualizer.Standalone`.
+    `Localize.Inputs.Playground.Visualizer.Standalone`.
 
     ## Views
 
@@ -16,7 +16,7 @@ if Code.ensure_loaded?(Plug.Router) do
 
     ## Enable flag
 
-    `LocalizeInputsPlayground.Visualizer.Standalone.start/1` refuses to
+    `Localize.Inputs.Playground.Visualizer.Standalone.start/1` refuses to
     boot unless `:localize_inputs_playground, :visualizer` is set to `true`
     in config (or `enabled: true` is passed explicitly).
     Mounting under `forward/2` in a Phoenix router is not gated.
@@ -35,16 +35,16 @@ if Code.ensure_loaded?(Plug.Router) do
     plug(Localize.Plug.PutLocale,
       from: [:query, :accept_language],
       param: "locale",
-      gettext: [LocalizeInputsPlayground.Gettext]
+      gettext: [Localize.Inputs.Playground.Gettext]
     )
 
     plug(:dispatch)
 
-    alias LocalizeInputsPlayground.Visualizer.Assets
-    alias LocalizeInputsPlayground.Visualizer.FormatView
-    alias LocalizeInputsPlayground.Visualizer.InputView
-    alias LocalizeInputsPlayground.Visualizer.LocaleView
-    alias LocalizeInputsPlayground.Visualizer.ParseView
+    alias Localize.Inputs.Playground.Visualizer.Assets
+    alias Localize.Inputs.Playground.Visualizer.FormatView
+    alias Localize.Inputs.Playground.Visualizer.InputView
+    alias Localize.Inputs.Playground.Visualizer.LocaleView
+    alias Localize.Inputs.Playground.Visualizer.ParseView
 
     get "/" do
       base = base_path(conn)
@@ -93,6 +93,13 @@ if Code.ensure_loaded?(Plug.Router) do
       |> Plug.Conn.put_resp_content_type("application/javascript")
       |> Plug.Conn.put_resp_header("cache-control", "public, max-age=31536000, immutable")
       |> Plug.Conn.send_resp(200, Assets.component_js())
+    end
+
+    get "/assets/logo.png" do
+      conn
+      |> Plug.Conn.put_resp_content_type("image/png")
+      |> Plug.Conn.put_resp_header("cache-control", "public, max-age=31536000, immutable")
+      |> Plug.Conn.send_resp(200, Assets.logo_png())
     end
 
     match _ do

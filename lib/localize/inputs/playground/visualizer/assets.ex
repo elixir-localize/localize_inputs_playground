@@ -1,4 +1,4 @@
-defmodule LocalizeInputsPlayground.Visualizer.Assets do
+defmodule Localize.Inputs.Playground.Visualizer.Assets do
   @moduledoc false
 
   @css """
@@ -94,6 +94,7 @@ defmodule LocalizeInputsPlayground.Visualizer.Assets do
   .li-brand-text { display: flex; flex-direction: column; }
   .li-brand h1 { font-size: 1.25rem; margin: 0 0 0.15rem; font-weight: 700; letter-spacing: -0.01em; }
   .li-brand p { color: var(--li-text-dim); margin: 0; font-size: 0.85rem; }
+  .li-logo { width: 40px; height: 40px; border-radius: 8px; flex: 0 0 auto; box-shadow: var(--li-shadow-sm); }
 
   .li-tabs { display: flex; gap: 0.25rem; }
   .li-tabs a {
@@ -349,6 +350,7 @@ defmodule LocalizeInputsPlayground.Visualizer.Assets do
 
   @external_resource Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.css")
   @external_resource Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.js")
+  @external_resource Path.join(:code.priv_dir(:localize_inputs_playground), "static/localize.png")
 
   @component_css File.read!(
                    Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.css")
@@ -356,10 +358,15 @@ defmodule LocalizeInputsPlayground.Visualizer.Assets do
   @component_js File.read!(
                   Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.js")
                 )
+  @logo_png File.read!(
+              Path.join(:code.priv_dir(:localize_inputs_playground), "static/localize.png")
+            )
 
   @spec component_css() :: String.t()
   def component_css, do: @component_css
 
   @spec component_js() :: String.t()
   def component_js, do: @component_js
+
+  def logo_png, do: @logo_png
 end

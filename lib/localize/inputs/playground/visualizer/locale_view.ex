@@ -1,22 +1,22 @@
 if Code.ensure_loaded?(Gettext.Backend) do
-  defmodule LocalizeInputsPlayground.Visualizer.LocaleView do
-    use Localize.Message.Sigils, backend: LocalizeInputsPlayground.Gettext
+  defmodule Localize.Inputs.Playground.Visualizer.LocaleView do
+    use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
-    alias Localize.Inputs.Locale
-    alias LocalizeInputsPlayground.Visualizer.Render
+    alias Localize.Inputs.Number
+    alias Localize.Inputs.Playground.Visualizer.Render
 
     def render(_params, base) do
       rows =
         for {locale, label} <- Render.locale_options() do
-          {locale, label, Locale.for_locale(locale)}
+          {locale, label, Number.number_for_locale(locale)}
         end
 
       body = [
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Locale display data" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"For every demo locale, the snapshot that <code>Localize.Inputs.Locale.for_locale/1</code> returns.",
+        ~t"For every demo locale, the snapshot that <code>Localize.Inputs.Number.number_for_locale/1</code> returns.",
         "</p>",
         table(rows),
         "</section>"

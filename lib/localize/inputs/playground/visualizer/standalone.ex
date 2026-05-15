@@ -1,10 +1,10 @@
 if Code.ensure_loaded?(Bandit) do
-  defmodule LocalizeInputsPlayground.Visualizer.Standalone do
+  defmodule Localize.Inputs.Playground.Visualizer.Standalone do
     @moduledoc """
-    Runs `LocalizeInputsPlayground.Visualizer` as a standalone Bandit
+    Runs `Localize.Inputs.Playground.Visualizer` as a standalone Bandit
     web server for local development.
 
-        LocalizeInputsPlayground.Visualizer.Standalone.start(port: 4003)
+        Localize.Inputs.Playground.Visualizer.Standalone.start(port: 4003)
         # Visit http://localhost:4003
 
     ## Enable flag
@@ -38,15 +38,15 @@ if Code.ensure_loaded?(Bandit) do
 
     * `{:ok, pid()}` when the server starts.
 
-    * `{:error, %LocalizeInputsPlayground.VisualizerDisabledError{}}` when
+    * `{:error, %Localize.Inputs.Playground.VisualizerDisabledError{}}` when
       the enable flag is not set.
 
     * `{:error, term()}` propagated from `Bandit.start_link/1`.
 
     ### Examples
 
-        iex> {:error, %LocalizeInputsPlayground.VisualizerDisabledError{}} =
-        ...>   LocalizeInputsPlayground.Visualizer.Standalone.start(enabled: false)
+        iex> {:error, %Localize.Inputs.Playground.VisualizerDisabledError{}} =
+        ...>   Localize.Inputs.Playground.Visualizer.Standalone.start(enabled: false)
         iex> :ok
         :ok
 
@@ -58,12 +58,12 @@ if Code.ensure_loaded?(Bandit) do
         ip = Keyword.get(options, :ip, :loopback)
 
         Bandit.start_link(
-          plug: LocalizeInputsPlayground.Visualizer,
+          plug: Localize.Inputs.Playground.Visualizer,
           port: port,
           ip: ip_tuple(ip)
         )
       else
-        {:error, LocalizeInputsPlayground.VisualizerDisabledError.exception([])}
+        {:error, Localize.Inputs.Playground.VisualizerDisabledError.exception([])}
       end
     end
 
@@ -92,7 +92,7 @@ if Code.ensure_loaded?(Bandit) do
           id: __MODULE__,
           start:
             {Bandit, :start_link,
-             [[plug: LocalizeInputsPlayground.Visualizer, port: port, ip: ip_tuple(ip)]]},
+             [[plug: Localize.Inputs.Playground.Visualizer, port: port, ip: ip_tuple(ip)]]},
           type: :supervisor
         }
       else
@@ -144,7 +144,7 @@ if Code.ensure_loaded?(Bandit) do
 
     ### Examples
 
-        iex> LocalizeInputsPlayground.Visualizer.Standalone.enabled?(enabled: true)
+        iex> Localize.Inputs.Playground.Visualizer.Standalone.enabled?(enabled: true)
         true
 
     """

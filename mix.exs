@@ -1,4 +1,4 @@
-defmodule LocalizeInputsPlayground.MixProject do
+defmodule Localize.Inputs.Playground.MixProject do
   use Mix.Project
 
   @version "0.1.0"
@@ -8,7 +8,7 @@ defmodule LocalizeInputsPlayground.MixProject do
     [
       app: :localize_inputs_playground,
       version: @version,
-      name: "LocalizeInputsPlayground",
+      name: "Localize.Inputs.Playground",
       source_url: @source_url,
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
@@ -30,15 +30,14 @@ defmodule LocalizeInputsPlayground.MixProject do
 
   def application do
     [
-      mod: {LocalizeInputsPlayground.Application, []},
+      mod: {Localize.Inputs.Playground.Application, []},
       extra_applications: [:logger]
     ]
   end
 
   defp description do
-    "Deployable host for `LocalizeInputsPlayground.Visualizer` — Bandit + a host " <>
-      "router (favicon, robots.txt, /healthz) that forwards to the visualizer. " <>
-      "Not published to hex."
+    "Deployable host for `Localize.Inputs.Playground.Visualizer` — Bandit + a host " <>
+      "router (favicon, robots.txt, /healthz) that forwards to the visualizer."
   end
 
   defp docs do
@@ -59,12 +58,12 @@ defmodule LocalizeInputsPlayground.MixProject do
   defp groups_for_modules do
     [
       Host: [
-        LocalizeInputsPlayground.Application,
-        LocalizeInputsPlayground.Router
+        Localize.Inputs.Playground.Application,
+        Localize.Inputs.Playground.Router
       ],
-      Visualizer: ~r/^LocalizeInputsPlayground\.Visualizer(\.|$)/,
-      Gettext: [LocalizeInputsPlayground.Gettext],
-      Exceptions: [LocalizeInputsPlayground.VisualizerDisabledError]
+      Visualizer: ~r/^Localize.Inputs.Playground\.Visualizer(\.|$)/,
+      Gettext: [Localize.Inputs.Playground.Gettext],
+      Exceptions: [Localize.Inputs.Playground.VisualizerDisabledError]
     ]
   end
 

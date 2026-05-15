@@ -1,7 +1,7 @@
-defmodule LocalizeInputsPlayground.VisualizerTest do
+defmodule Localize.Inputs.Playground.VisualizerTest do
   use ExUnit.Case, async: false
 
-  alias LocalizeInputsPlayground.Visualizer
+  alias Localize.Inputs.Playground.Visualizer
 
   setup do
     conn = fn path, query ->

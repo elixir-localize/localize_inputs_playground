@@ -1,10 +1,10 @@
 if Code.ensure_loaded?(Gettext.Backend) do
-  defmodule LocalizeInputsPlayground.Visualizer.ParseView do
-    use Localize.Message.Sigils, backend: LocalizeInputsPlayground.Gettext
+  defmodule Localize.Inputs.Playground.Visualizer.ParseView do
+    use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
     alias Localize.Inputs.Parser
-    alias LocalizeInputsPlayground.Visualizer.Render
+    alias Localize.Inputs.Playground.Visualizer.Render
 
     def render(params, base) do
       input = params.input

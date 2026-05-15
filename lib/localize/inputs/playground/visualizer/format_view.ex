@@ -1,9 +1,9 @@
 if Code.ensure_loaded?(Gettext.Backend) do
-  defmodule LocalizeInputsPlayground.Visualizer.FormatView do
-    use Localize.Message.Sigils, backend: LocalizeInputsPlayground.Gettext
+  defmodule Localize.Inputs.Playground.Visualizer.FormatView do
+    use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
-    alias LocalizeInputsPlayground.Visualizer.Render
+    alias Localize.Inputs.Playground.Visualizer.Render
 
     def render(params, base) do
       amount = params.amount

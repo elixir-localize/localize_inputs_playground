@@ -1,8 +1,8 @@
-defmodule LocalizeInputsPlayground.Gettext do
+defmodule Localize.Inputs.Playground.Gettext do
   @moduledoc """
   Gettext backend for the visualizer's UI strings.
 
-  Hosts the message catalog used by `LocalizeInputsPlayground.Visualizer`
+  Hosts the message catalog used by `Localize.Inputs.Playground.Visualizer`
   and its view modules. The catalog lives in `priv/gettext/` and
   ships English source plus translations for the locales pre-bundled
   with the playground.
