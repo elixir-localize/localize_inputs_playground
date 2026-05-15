@@ -1,0 +1,228 @@
+## "msgid"s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove "msgid"s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use "mix gettext.extract --merge" or "mix gettext.merge"
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: he\n"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:62
+#, elixir-autogen, icu-format
+msgid "(empty)"
+msgstr "(ריק)"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:66
+#, elixir-autogen, icu-format
+msgid "(invalid input)"
+msgstr "(קלט לא תקין)"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#, elixir-autogen, icu-format
+msgid "Canonical"
+msgstr "קנונית"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:126
+#, elixir-autogen, icu-format
+msgid "Component code"
+msgstr "קוד הרכיב"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:25
+#, elixir-autogen, icu-format
+msgid "Cross-locale formatting"
+msgstr "עיצוב חוצה-לוקאלים"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:19
+#, elixir-autogen, icu-format
+msgid "Cross-locale parsing"
+msgstr "ניתוח חוצה-לוקאלים"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Decimal"
+msgstr "עשרוני"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Digits"
+msgstr "ספרות"
+
+#: lib/localize_inputs_playground/visualizer/render.ex:64
+#, elixir-autogen, icu-format
+msgid "Format"
+msgstr "עצב"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:40
+#, elixir-autogen, icu-format
+msgid "Format across locales"
+msgstr "עצב בין לוקאלים"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Group"
+msgstr "קבוצה"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:181
+#: lib/localize_inputs_playground/visualizer/input_view.ex:190
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:27
+#: lib/localize_inputs_playground/visualizer/render.ex:62
+#, elixir-autogen, icu-format
+msgid "Input"
+msgstr "קלט"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:52
+#: lib/localize_inputs_playground/visualizer/input_view.ex:27
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#: lib/localize_inputs_playground/visualizer/render.ex:65
+#, elixir-autogen, icu-format
+msgid "Locale"
+msgstr "לוקאל"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:17
+#, elixir-autogen, icu-format
+msgid "Locale display data"
+msgstr "נתוני תצוגה של לוקאל"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Minus"
+msgstr "מינוס"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:18
+#, elixir-autogen, icu-format
+msgid "Number Input Component"
+msgstr "רכיב Number Input"
+
+#: lib/localize_inputs_playground/visualizer/render.ex:63
+#, elixir-autogen, icu-format
+msgid "Parse"
+msgstr "נתח"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:35
+#, elixir-autogen, icu-format
+msgid "Parse & format"
+msgstr "נתח ועצב"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:33
+#, elixir-autogen, icu-format
+msgid "Parse across locales"
+msgstr "נתח בין לוקאלים"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:153
+#, elixir-autogen, icu-format
+msgid "Resolved locale data"
+msgstr "נתוני לוקאל מפוענחים"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#, elixir-autogen, icu-format
+msgid "Result"
+msgstr "תוצאה"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#, elixir-autogen, icu-format
+msgid "Round-trip"
+msgstr "הלוך ושוב"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Amount (canonical form)"
+msgstr "סכום (צורה קנונית)"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:184
+#, elixir-autogen, icu-format
+msgid "Blur format"
+msgstr "פורמט בעת בלר"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:183
+#, elixir-autogen, icu-format
+msgid "Canonical wire value"
+msgstr "ערך קנוני בחיווט"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:191
+#, elixir-autogen, icu-format
+msgid "Error"
+msgstr "שגיאה"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:19
+#, elixir-autogen, icu-format
+msgid "For every demo locale, the snapshot that <code>Localize.Inputs.Locale.for_locale/1</code> returns."
+msgstr "עבור כל לוקאל הדגמה, התמונה ש-<code>Localize.Inputs.Locale.for_locale/1</code> מחזיר."
+
+#: lib/localize_inputs_playground/visualizer/render.ex:112
+#, elixir-autogen, icu-format
+msgid "Headless API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Locale</code>."
+msgstr "Headless API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Locale</code>."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:20
+#, elixir-autogen, icu-format
+msgid "Live HEEx render of <code>Localize.Inputs.Components.number_input/1</code>."
+msgstr "רינדור HEEx חי של <code>Localize.Inputs.Components.number_input/1</code>."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:79
+#, elixir-autogen, icu-format
+msgid "Number input"
+msgstr "קלט מספר"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:182
+#, elixir-autogen, icu-format
+msgid "Parsed (Decimal)"
+msgstr "מנותח (Decimal)"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:37
+#, elixir-autogen, icu-format
+msgid "Period as decimal, no grouping — e.g. 1234567.89"
+msgstr "נקודה כעשרוני, ללא קיבוץ — לדוגמה 1234567.89"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:21
+#, elixir-autogen, icu-format
+msgid "Same input, every locale. Demonstrates how <code>Localize.Inputs.Parser</code> interprets the decimal and grouping separators per locale."
+msgstr "אותו קלט, בכל לוקאל. ממחיש כיצד <code>Localize.Inputs.Parser</code> מפרש את הפסיק העשרוני ואת מפרידי האלפים בכל לוקאל."
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:26
+#, elixir-autogen, icu-format
+msgid "Same parsed value, every locale."
+msgstr "אותו ערך מפורש בכל לוקאל."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:128
+#, elixir-autogen, icu-format
+msgid "The HEEx call site that renders the input above. Copy straight into a LiveView template."
+msgstr "אתר הקריאה של HEEx שמרנדר את הקלט למעלה. העתק ישירות לתבנית LiveView."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:37
+#, elixir-autogen, icu-format
+msgid "Try"
+msgstr "נסה"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:35
+#, elixir-autogen, icu-format
+msgid "Try <code>1,234.56</code>, <code>1.234,56</code>, <code>1 234,56</code>, <code>(1234.56)</code>"
+msgstr "נסה <code>1,234.56</code>, <code>1.234,56</code>, <code>1 234,56</code>, <code>(1234.56)</code>"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:185
+#, elixir-autogen, icu-format
+msgid "Validation"
+msgstr "אימות"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:155
+#, elixir-autogen, icu-format
+msgid "What <code>Localize.Inputs.Locale.for_locale/1</code> returns for the current locale — the data the JS hook reads from <code>data-</code> attributes."
+msgstr "מה ש-<code>Localize.Inputs.Locale.for_locale/1</code> מחזיר עבור הלוקאל הנוכחי — הנתונים שה-hook של ה-JS קורא מתכונות <code>data-</code>."
+
+#: lib/localize_inputs_playground/visualizer/render.ex:76
+#, elixir-autogen, icu-format
+msgid "locale-aware number input — try how it behaves across locales"
+msgstr "קלט מספר מודע ללוקאל — נסה איך הוא מתנהג בין לוקאלים"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:44
+#, elixir-autogen, icu-format
+msgid "number_input result"
+msgstr "תוצאת number_input"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:82
+#, elixir-autogen, icu-format
+msgid "phx-hook=\"NumberInput\" — wraps AutoNumeric when present"
+msgstr "phx-hook=\"NumberInput\" — עוטף את AutoNumeric כשהוא קיים"

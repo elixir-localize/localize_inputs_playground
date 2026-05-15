@@ -1,0 +1,46 @@
+# Build / dependency artefacts — rebuilt inside the container.
+_build/
+deps/
+cover/
+doc/
+
+# Test code is not part of the release image.
+test/
+
+# Elixir Language Server / Lexical / dialyzer caches.
+.elixir_ls/
+.lexical/
+*.plt
+*.plt.hash
+.dialyzer_*.tmp
+
+# Local env / secrets / overrides. None are loaded by the prod
+# release; explicitly excluded so they can't leak in by accident.
+.env
+.env.*
+config/*.local.exs
+
+# Git history adds tens of MB to the build context for no gain
+# — the release is built from a snapshot.
+.git/
+.gitignore
+.githooks/
+
+# CI / docs / metadata that the runtime doesn't need.
+.github/
+CHANGELOG.md
+README.md
+LICENSE.md
+
+# Editor / OS noise.
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Fly / Docker artefacts left behind by previous runs.
+fly.toml.local
+.dockerignore
+Dockerfile

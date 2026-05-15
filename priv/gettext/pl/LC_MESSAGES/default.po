@@ -1,0 +1,228 @@
+## "msgid"s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove "msgid"s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use "mix gettext.extract --merge" or "mix gettext.merge"
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: pl\n"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:62
+#, elixir-autogen, icu-format
+msgid "(empty)"
+msgstr "(puste)"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:66
+#, elixir-autogen, icu-format
+msgid "(invalid input)"
+msgstr "(nieprawidłowe dane)"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#, elixir-autogen, icu-format
+msgid "Canonical"
+msgstr "Kanoniczna"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:126
+#, elixir-autogen, icu-format
+msgid "Component code"
+msgstr "Kod komponentu"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:25
+#, elixir-autogen, icu-format
+msgid "Cross-locale formatting"
+msgstr "Formatowanie między lokalizacjami"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:19
+#, elixir-autogen, icu-format
+msgid "Cross-locale parsing"
+msgstr "Parsowanie między lokalizacjami"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Decimal"
+msgstr "Dziesiętny"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Digits"
+msgstr "Cyfry"
+
+#: lib/localize_inputs_playground/visualizer/render.ex:64
+#, elixir-autogen, icu-format
+msgid "Format"
+msgstr "Formatuj"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:40
+#, elixir-autogen, icu-format
+msgid "Format across locales"
+msgstr "Formatuj między lokalizacjami"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Group"
+msgstr "Grupowanie"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:181
+#: lib/localize_inputs_playground/visualizer/input_view.ex:190
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:27
+#: lib/localize_inputs_playground/visualizer/render.ex:62
+#, elixir-autogen, icu-format
+msgid "Input"
+msgstr "Wejście"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:52
+#: lib/localize_inputs_playground/visualizer/input_view.ex:27
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#: lib/localize_inputs_playground/visualizer/render.ex:65
+#, elixir-autogen, icu-format
+msgid "Locale"
+msgstr "Locale"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:17
+#, elixir-autogen, icu-format
+msgid "Locale display data"
+msgstr "Dane wyświetlania locale"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Minus"
+msgstr "Minus"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:18
+#, elixir-autogen, icu-format
+msgid "Number Input Component"
+msgstr "Komponent Number Input"
+
+#: lib/localize_inputs_playground/visualizer/render.ex:63
+#, elixir-autogen, icu-format
+msgid "Parse"
+msgstr "Parsuj"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:35
+#, elixir-autogen, icu-format
+msgid "Parse & format"
+msgstr "Parsuj i formatuj"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:33
+#, elixir-autogen, icu-format
+msgid "Parse across locales"
+msgstr "Parsuj między lokalizacjami"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:153
+#, elixir-autogen, icu-format
+msgid "Resolved locale data"
+msgstr "Rozwiązane dane locale"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#, elixir-autogen, icu-format
+msgid "Result"
+msgstr "Wynik"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:49
+#, elixir-autogen, icu-format
+msgid "Round-trip"
+msgstr "Tam i z powrotem"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:31
+#, elixir-autogen, icu-format
+msgid "Amount (canonical form)"
+msgstr "Kwota (forma kanoniczna)"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:184
+#, elixir-autogen, icu-format
+msgid "Blur format"
+msgstr "Format po utracie fokusu"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:183
+#, elixir-autogen, icu-format
+msgid "Canonical wire value"
+msgstr "Kanoniczna wartość przewodowa"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:191
+#, elixir-autogen, icu-format
+msgid "Error"
+msgstr "Błąd"
+
+#: lib/localize_inputs_playground/visualizer/locale_view.ex:19
+#, elixir-autogen, icu-format
+msgid "For every demo locale, the snapshot that <code>Localize.Inputs.Locale.for_locale/1</code> returns."
+msgstr "Dla każdego demonstracyjnego locale — migawka zwracana przez <code>Localize.Inputs.Locale.for_locale/1</code>."
+
+#: lib/localize_inputs_playground/visualizer/render.ex:112
+#, elixir-autogen, icu-format
+msgid "Headless API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Locale</code>."
+msgstr "Bezgłowe API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Locale</code>."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:20
+#, elixir-autogen, icu-format
+msgid "Live HEEx render of <code>Localize.Inputs.Components.number_input/1</code>."
+msgstr "Renderowanie HEEx na żywo dla <code>Localize.Inputs.Components.number_input/1</code>."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:79
+#, elixir-autogen, icu-format
+msgid "Number input"
+msgstr "Wprowadzanie liczby"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:182
+#, elixir-autogen, icu-format
+msgid "Parsed (Decimal)"
+msgstr "Sparsowane (Decimal)"
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:37
+#, elixir-autogen, icu-format
+msgid "Period as decimal, no grouping — e.g. 1234567.89"
+msgstr "Kropka jako separator dziesiętny, bez grupowania — np. 1234567.89"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:21
+#, elixir-autogen, icu-format
+msgid "Same input, every locale. Demonstrates how <code>Localize.Inputs.Parser</code> interprets the decimal and grouping separators per locale."
+msgstr "To samo wejście w każdym locale. Pokazuje, jak <code>Localize.Inputs.Parser</code> interpretuje separatory dziesiętne i tysięcy w zależności od locale."
+
+#: lib/localize_inputs_playground/visualizer/format_view.ex:26
+#, elixir-autogen, icu-format
+msgid "Same parsed value, every locale."
+msgstr "Ta sama sparsowana wartość w każdym locale."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:128
+#, elixir-autogen, icu-format
+msgid "The HEEx call site that renders the input above. Copy straight into a LiveView template."
+msgstr "Miejsce wywołania HEEx renderujące powyższe wejście. Wklej go bezpośrednio do szablonu LiveView."
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:37
+#, elixir-autogen, icu-format
+msgid "Try"
+msgstr "Spróbuj"
+
+#: lib/localize_inputs_playground/visualizer/parse_view.ex:35
+#, elixir-autogen, icu-format
+msgid "Try <code>1,234.56</code>, <code>1.234,56</code>, <code>1 234,56</code>, <code>(1234.56)</code>"
+msgstr "Spróbuj <code>1,234.56</code>, <code>1.234,56</code>, <code>1 234,56</code>, <code>(1234.56)</code>"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:185
+#, elixir-autogen, icu-format
+msgid "Validation"
+msgstr "Walidacja"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:155
+#, elixir-autogen, icu-format
+msgid "What <code>Localize.Inputs.Locale.for_locale/1</code> returns for the current locale — the data the JS hook reads from <code>data-</code> attributes."
+msgstr "To, co <code>Localize.Inputs.Locale.for_locale/1</code> zwraca dla bieżącego locale — dane, które haczyk JS odczytuje z atrybutów <code>data-</code>."
+
+#: lib/localize_inputs_playground/visualizer/render.ex:76
+#, elixir-autogen, icu-format
+msgid "locale-aware number input — try how it behaves across locales"
+msgstr "wprowadzanie liczb świadome locale — sprawdź zachowanie w różnych locale"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:44
+#, elixir-autogen, icu-format
+msgid "number_input result"
+msgstr "wynik number_input"
+
+#: lib/localize_inputs_playground/visualizer/input_view.ex:82
+#, elixir-autogen, icu-format
+msgid "phx-hook=\"NumberInput\" — wraps AutoNumeric when present"
+msgstr "phx-hook=\"NumberInput\" — opakowuje AutoNumeric, gdy jest dostępny"

@@ -1,0 +1,84 @@
+defmodule LocalizeInputsPlayground.MixProject do
+  use Mix.Project
+
+  @version "0.1.0"
+  @source_url "https://github.com/elixir-localize/localize_inputs_playground"
+
+  def project do
+    [
+      app: :localize_inputs_playground,
+      version: @version,
+      name: "LocalizeInputsPlayground",
+      source_url: @source_url,
+      elixir: "~> 1.17",
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      description: description(),
+      docs: docs(),
+      dialyzer: [
+        plt_add_apps: ~w(ecto gettext mix phoenix_html phoenix_live_view plug bandit)a,
+        flags: [
+          :error_handling,
+          :unknown,
+          :underspecs,
+          :extra_return,
+          :missing_return
+        ]
+      ]
+    ]
+  end
+
+  def application do
+    [
+      mod: {LocalizeInputsPlayground.Application, []},
+      extra_applications: [:logger]
+    ]
+  end
+
+  defp description do
+    "Deployable host for `LocalizeInputsPlayground.Visualizer` — Bandit + a host " <>
+      "router (favicon, robots.txt, /healthz) that forwards to the visualizer. " <>
+      "Not published to hex."
+  end
+
+  defp docs do
+    [
+      source_ref: "v#{@version}",
+      main: "readme",
+      extras: ["README.md", "CHANGELOG.md", "LICENSE.md"],
+      formatters: ["html"],
+      groups_for_modules: groups_for_modules(),
+      skip_code_autolink_to: [
+        "Plug.Conn.t/0",
+        "Supervisor.child_spec/0"
+      ],
+      skip_undefined_reference_warnings_on: ["CHANGELOG.md"]
+    ]
+  end
+
+  defp groups_for_modules do
+    [
+      Host: [
+        LocalizeInputsPlayground.Application,
+        LocalizeInputsPlayground.Router
+      ],
+      Visualizer: ~r/^LocalizeInputsPlayground\.Visualizer(\.|$)/,
+      Gettext: [LocalizeInputsPlayground.Gettext],
+      Exceptions: [LocalizeInputsPlayground.VisualizerDisabledError]
+    ]
+  end
+
+  defp deps do
+    [
+      {:localize_inputs, "~> 0.2", path: "../localize_inputs"},
+      {:localize_web, "~> 0.7"},
+      {:phoenix_html, "~> 4.0"},
+      {:phoenix_live_view, "~> 1.0"},
+      {:gettext, "~> 1.0"},
+      {:plug, "~> 1.15"},
+      {:bandit, "~> 1.5"},
+      {:ex_doc, "~> 0.30", only: [:dev, :release], runtime: false},
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false}
+    ]
+  end
+end
