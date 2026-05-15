@@ -79,7 +79,7 @@ defmodule LocalizeInputsPlayground.MixProject do
       {:bandit, "~> 1.5"},
       {:ex_doc, "~> 0.30", only: [:dev, :release], runtime: false},
       {:dialyxir, "~> 1.4", only: :dev, runtime: false}
-    ] ++ maybe_json_polyfill() ++ maybe_cldr()
+    ] ++ maybe_json_polyfill()
   end
 
   defp maybe_json_polyfill do
