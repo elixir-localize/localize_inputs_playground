@@ -69,7 +69,7 @@ defmodule Localize.Inputs.Playground.MixProject do
 
   defp deps do
     [
-      {:localize_inputs, "~> 0.2", path: "../localize_inputs"},
+      {:localize_inputs, "~> 0.1", path: "../localize_inputs"},
       {:localize_web, "~> 0.7"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_view, "~> 1.0"},

@@ -22,7 +22,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "</section>"
       ]
 
-      Render.page(title: "Locale", active: "locale", base: base, body: body)
+      Render.page(title: "Locale", active: {"number", "locale"}, base: base, body: body)
     end
 
     defp table(rows) do

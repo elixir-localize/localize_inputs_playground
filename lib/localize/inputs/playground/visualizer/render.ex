@@ -68,13 +68,35 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
+    # Two-level navigation:
+    #
+    # * top nav (`.li-sections`) — picks the input family:
+    #   Number, Unit (more later).
+    # * sub nav (`.li-tabs`) — Input / Parse / Format / Locale
+    #   within the active family. Subsections that don't exist
+    #   for a given family are simply not rendered.
+    #
+    # The `active` arg is a `{section, tab}` tuple. Both string.
     defp header(active, base) do
-      tabs = [
-        {"input", ~t"Input"},
-        {"parse", ~t"Parse"},
-        {"format", ~t"Format"},
-        {"locale", ~t"Locale"}
+      {section, _tab} = active
+
+      sections = [
+        {"number", ~t"Number"},
+        {"unit", ~t"Unit"}
       ]
+
+      tabs_for = fn
+        "number" ->
+          [
+            {"input", ~t"Input"},
+            {"parse", ~t"Parse"},
+            {"format", ~t"Format"},
+            {"locale", ~t"Locale"}
+          ]
+
+        "unit" ->
+          [{"input", ~t"Input"}]
+      end
 
       [
         "<header class=\"li-header\">",
@@ -88,18 +110,39 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<div class=\"li-brand-text\">",
         "<h1>Localize.Inputs.Playground.Visualizer</h1>",
         "<p>" <>
-          escape(~t"locale-aware number input — try how it behaves across locales") <> "</p>",
+          escape(~t"locale-aware form inputs — try how they behave across locales") <> "</p>",
         "</div>",
         "</a>",
         theme_toggle(),
         "</div>",
-        "<nav class=\"li-tabs\">",
-        Enum.map(tabs, fn {path, label} ->
-          cls = if path == active, do: "active", else: ""
+        # Top-level: input family.
+        "<nav class=\"li-sections\">",
+        Enum.map(sections, fn {path, label} ->
+          cls = if path == section, do: "active", else: ""
 
           [
             "<a href=\"",
             escape(base),
+            "/",
+            path,
+            "\" class=\"",
+            cls,
+            "\">",
+            label,
+            "</a>"
+          ]
+        end),
+        "</nav>",
+        # Sub-level: tabs within the active family.
+        "<nav class=\"li-tabs\">",
+        Enum.map(tabs_for.(section), fn {path, label} ->
+          cls = if path == elem(active, 1), do: "active", else: ""
+
+          [
+            "<a href=\"",
+            escape(base),
+            "/",
+            section,
             "/",
             path,
             "\" class=\"",

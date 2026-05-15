@@ -21,7 +21,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "</p>",
         "<form method=\"get\" action=\"",
         Render.escape(base),
-        "/input\" class=\"li-form\">",
+        "/number/input\" class=\"li-form\">",
         ~s(<input type="hidden" name="submitted" value="1">),
         Render.field(
           ~t"Locale",
@@ -47,7 +47,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         bootstrap_script(base)
       ]
 
-      Render.page(title: "Input", active: "input", base: base, body: body)
+      Render.page(title: "Input", active: {"number", "input"}, base: base, body: body)
     end
 
     defp live_number_input_field(locale, value) do
@@ -216,6 +216,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "  });\n",
         "}\n",
         "mount('[phx-hook=\"NumberInput\"]', Hooks.NumberInput);\n",
+        "mount('[phx-hook=\"UnitPicker\"]', Hooks.UnitPicker);\n",
         "document.querySelectorAll('[data-li-reactive]').forEach(el => {\n",
         "  el.addEventListener('change', () => {\n",
         "    const form = el.closest('form');\n",

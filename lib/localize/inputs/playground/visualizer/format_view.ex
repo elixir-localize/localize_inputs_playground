@@ -26,7 +26,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<p class=\"li-desc\">" <> ~t"Same parsed value, every locale." <> "</p>",
         "<form method=\"get\" action=\"",
         Render.escape(base),
-        "/format\" class=\"li-form\">",
+        "/number/format\" class=\"li-form\">",
         Render.field(
           ~t"Amount (canonical form)",
           [
@@ -44,7 +44,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "</section>"
       ]
 
-      Render.page(title: "Format", active: "format", base: base, body: body)
+      Render.page(title: "Format", active: {"number", "format"}, base: base, body: body)
     end
 
     defp result_table(rows) do

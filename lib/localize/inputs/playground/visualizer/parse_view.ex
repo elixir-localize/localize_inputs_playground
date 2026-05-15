@@ -22,7 +22,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "</p>",
         "<form method=\"get\" action=\"",
         Render.escape(base),
-        "/parse\" class=\"li-form\">",
+        "/number/parse\" class=\"li-form\">",
         "<div class=\"li-field li-field-wide\">",
         "<label><span>" <> ~t"Input" <> "</span>",
         ~s(<input type="text" name="input" value="),
@@ -40,7 +40,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "</section>"
       ]
 
-      Render.page(title: "Parse", active: "parse", base: base, body: body)
+      Render.page(title: "Parse", active: {"number", "parse"}, base: base, body: body)
     end
 
     defp result_table(rows) do

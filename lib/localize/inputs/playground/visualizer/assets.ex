@@ -96,6 +96,34 @@ defmodule Localize.Inputs.Playground.Visualizer.Assets do
   .li-brand p { color: var(--li-text-dim); margin: 0; font-size: 0.85rem; }
   .li-logo { width: 40px; height: 40px; border-radius: 8px; flex: 0 0 auto; box-shadow: var(--li-shadow-sm); }
 
+  /* Top-level "input family" nav — pill style to distinguish
+     from the sub-tab strip below it. */
+  .li-sections {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.5rem 0 0.35rem;
+    border-top: 1px solid var(--li-border);
+    margin-top: 0.5rem;
+  }
+  .li-sections a {
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    color: var(--li-text-dim);
+    background: var(--li-surface-2);
+    border-radius: var(--li-radius-pill);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: color 120ms ease, background 120ms ease;
+  }
+  .li-sections a.active {
+    color: var(--li-accent-fg);
+    background: var(--li-accent);
+  }
+  .li-sections a:hover:not(.active) {
+    color: var(--li-text);
+    background: var(--li-pill-bg);
+  }
+
   .li-tabs { display: flex; gap: 0.25rem; }
   .li-tabs a {
     text-decoration: none;

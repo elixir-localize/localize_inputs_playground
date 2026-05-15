@@ -45,33 +45,59 @@ if Code.ensure_loaded?(Plug.Router) do
     alias Localize.Inputs.Playground.Visualizer.InputView
     alias Localize.Inputs.Playground.Visualizer.LocaleView
     alias Localize.Inputs.Playground.Visualizer.ParseView
+    alias Localize.Inputs.Playground.Visualizer.UnitInputView
 
     get "/" do
       base = base_path(conn)
 
       conn
-      |> Plug.Conn.put_resp_header("location", base <> "/input")
+      |> Plug.Conn.put_resp_header("location", base <> "/number/input")
       |> Plug.Conn.send_resp(302, "")
     end
 
-    get "/input" do
+    # ── Number section ───────────────────────────────────────
+
+    get "/number" do
+      base = base_path(conn)
+
+      conn
+      |> Plug.Conn.put_resp_header("location", base <> "/number/input")
+      |> Plug.Conn.send_resp(302, "")
+    end
+
+    get "/number/input" do
       params = parse_params(conn, :input)
       html(conn, InputView.render(params, base_path(conn)))
     end
 
-    get "/parse" do
+    get "/number/parse" do
       params = parse_params(conn, :parse)
       html(conn, ParseView.render(params, base_path(conn)))
     end
 
-    get "/format" do
+    get "/number/format" do
       params = parse_params(conn, :format)
       html(conn, FormatView.render(params, base_path(conn)))
     end
 
-    get "/locale" do
+    get "/number/locale" do
       params = parse_params(conn, :locale)
       html(conn, LocaleView.render(params, base_path(conn)))
+    end
+
+    # ── Unit section ─────────────────────────────────────────
+
+    get "/unit" do
+      base = base_path(conn)
+
+      conn
+      |> Plug.Conn.put_resp_header("location", base <> "/unit/input")
+      |> Plug.Conn.send_resp(302, "")
+    end
+
+    get "/unit/input" do
+      params = parse_params(conn, :unit_input)
+      html(conn, UnitInputView.render(params, base_path(conn)))
     end
 
     get "/assets/style.css" do
@@ -141,6 +167,18 @@ if Code.ensure_loaded?(Plug.Router) do
 
     defp parse_params(_params, :locale, _assigns) do
       %{}
+    end
+
+    defp parse_params(params, :unit_input, assigns) do
+      deployment_default = default_locale(assigns)
+      locale = param_locale(params, "locale", deployment_default)
+
+      %{
+        locale: locale,
+        deployment_default_locale: deployment_default,
+        category: blank_default(Map.get(params, "category"), "length"),
+        unit_input: blank_default(Map.get(params, "unit_input"), nil)
+      }
     end
 
     defp param_locale(params, key, default) do

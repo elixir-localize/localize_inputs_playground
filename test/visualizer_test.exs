@@ -13,35 +13,35 @@ defmodule Localize.Inputs.Playground.VisualizerTest do
     {:ok, conn: conn}
   end
 
-  test "/ redirects to /input", %{conn: conn} do
+  test "/ redirects to /number/input", %{conn: conn} do
     response = conn.("/", %{})
     assert response.status == 302
-    assert Plug.Conn.get_resp_header(response, "location") == ["/input"]
+    assert Plug.Conn.get_resp_header(response, "location") == ["/number/input"]
   end
 
   test "/input renders form", %{conn: conn} do
-    response = conn.("/input", %{"locale" => "en", "number_input" => "1,234.56"})
+    response = conn.("/number/input", %{"locale" => "en", "number_input" => "1,234.56"})
     assert response.status == 200
     assert response.resp_body =~ "Number Input Component"
     assert response.resp_body =~ "1234.56"
   end
 
   test "/parse renders the cross-locale table", %{conn: conn} do
-    response = conn.("/parse", %{"input" => "1.234,56"})
+    response = conn.("/number/parse", %{"input" => "1.234,56"})
     assert response.status == 200
     assert response.resp_body =~ "Cross-locale parsing"
     assert response.resp_body =~ "1234.56"
   end
 
   test "/format renders the cross-locale table", %{conn: conn} do
-    response = conn.("/format", %{"amount" => "1234567.89"})
+    response = conn.("/number/format", %{"amount" => "1234567.89"})
     assert response.status == 200
     assert response.resp_body =~ "Cross-locale formatting"
     assert response.resp_body =~ "1,234,567.89"
   end
 
   test "/locale renders per-locale table", %{conn: conn} do
-    response = conn.("/locale", %{})
+    response = conn.("/number/locale", %{})
     assert response.status == 200
     assert response.resp_body =~ "Locale display data"
   end
