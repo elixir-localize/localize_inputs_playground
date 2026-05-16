@@ -82,7 +82,8 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       sections = [
         {"number", ~t"Number"},
-        {"unit", ~t"Unit"}
+        {"unit", ~t"Unit"},
+        {"date", ~t"Date"}
       ]
 
       tabs_for = fn
@@ -96,6 +97,14 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
         "unit" ->
           [{"input", ~t"Input"}]
+
+        "date" ->
+          [
+            {"input", ~t"Input"},
+            {"range", ~t"Range"},
+            {"range-picker", ~t"Range Picker"},
+            {"live", ~t"LiveComponent"}
+          ]
       end
 
       [

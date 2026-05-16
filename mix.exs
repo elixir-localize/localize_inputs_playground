@@ -69,6 +69,11 @@ defmodule Localize.Inputs.Playground.MixProject do
 
   defp deps do
     [
+      # Path overrides for local development. Before publishing,
+      # flip these back to hex versions in the order:
+      # localize → calendrical → localize_inputs.
+      {:localize, path: "../localize", override: true},
+      {:calendrical, path: "../calendrical", override: true},
       {:localize_inputs, "~> 0.1", path: "../localize_inputs"},
       {:localize_web, "~> 0.7"},
       {:phoenix_html, "~> 4.0"},

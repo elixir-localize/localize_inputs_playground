@@ -41,6 +41,7 @@ if Code.ensure_loaded?(Plug.Router) do
     plug(:dispatch)
 
     alias Localize.Inputs.Playground.Visualizer.Assets
+    alias Localize.Inputs.Playground.Visualizer.DateInputView
     alias Localize.Inputs.Playground.Visualizer.FormatView
     alias Localize.Inputs.Playground.Visualizer.InputView
     alias Localize.Inputs.Playground.Visualizer.LocaleView
@@ -98,6 +99,36 @@ if Code.ensure_loaded?(Plug.Router) do
     get "/unit/input" do
       params = parse_params(conn, :unit_input)
       html(conn, UnitInputView.render(params, base_path(conn)))
+    end
+
+    # ── Date section ─────────────────────────────────────────
+
+    get "/date" do
+      base = base_path(conn)
+
+      conn
+      |> Plug.Conn.put_resp_header("location", base <> "/date/input")
+      |> Plug.Conn.send_resp(302, "")
+    end
+
+    get "/date/input" do
+      params = parse_params(conn, :date_input)
+      html(conn, DateInputView.render(:input, params, base_path(conn)))
+    end
+
+    get "/date/range" do
+      params = parse_params(conn, :date_range)
+      html(conn, DateInputView.render(:range, params, base_path(conn)))
+    end
+
+    get "/date/range-picker" do
+      params = parse_params(conn, :date_range_picker)
+      html(conn, DateInputView.render(:range_picker, params, base_path(conn)))
+    end
+
+    get "/date/live" do
+      params = parse_params(conn, :date_live)
+      html(conn, DateInputView.render(:live, params, base_path(conn)))
     end
 
     get "/assets/style.css" do
@@ -180,6 +211,62 @@ if Code.ensure_loaded?(Plug.Router) do
         unit_input: blank_default(Map.get(params, "unit_input"), nil)
       }
     end
+
+    defp parse_params(params, :date_input, assigns) do
+      deployment_default = default_locale(assigns)
+      locale = param_locale(params, "locale", deployment_default)
+      calendar_str = blank_default(Map.get(params, "calendar"), "gregorian")
+
+      %{
+        locale: locale,
+        deployment_default_locale: deployment_default,
+        calendar: validate_calendar(calendar_str),
+        value: blank_default(Map.get(params, "date"), nil)
+      }
+    end
+
+    defp parse_params(params, :date_range, assigns) do
+      deployment_default = default_locale(assigns)
+      locale = param_locale(params, "locale", deployment_default)
+
+      %{
+        locale: locale,
+        deployment_default_locale: deployment_default,
+        value_from: blank_default(Map.get(params, "trip_from"), nil),
+        value_to: blank_default(Map.get(params, "trip_to"), nil)
+      }
+    end
+
+    defp parse_params(params, :date_range_picker, assigns) do
+      deployment_default = default_locale(assigns)
+      locale = param_locale(params, "locale", deployment_default)
+      trip = Map.get(params, "trip") || %{}
+
+      %{
+        locale: locale,
+        deployment_default_locale: deployment_default,
+        value_from: blank_default(Map.get(trip, "from"), nil),
+        value_to: blank_default(Map.get(trip, "to"), nil)
+      }
+    end
+
+    defp parse_params(_params, :date_live, assigns) do
+      deployment_default = default_locale(assigns)
+      %{deployment_default_locale: deployment_default}
+    end
+
+    defp validate_calendar(name) when is_binary(name) do
+      atom =
+        try do
+          String.to_existing_atom(name)
+        rescue
+          _ -> :gregorian
+        end
+
+      if atom in Localize.Calendar.known_calendars(), do: atom, else: :gregorian
+    end
+
+    defp validate_calendar(_), do: :gregorian
 
     defp param_locale(params, key, default) do
       case Map.get(params, key) do
