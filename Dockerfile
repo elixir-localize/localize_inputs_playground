@@ -1,9 +1,9 @@
-# Multi-stage build for deploying MoneyInputPlayground
-# (Money.Input.Visualizer) on Fly.io.
+# Multi-stage build for deploying Localize.Inputs.Playground
+# (Localize.Inputs.Playground.Visualizer) on Fly.io.
 #
 # No Node.js, no asset pipeline — the visualizer's CSS and JS
 # are compiled into BEAM modules at build time inside the
-# `money_input` library.
+# `localize_inputs_*` libraries.
 
 # ---- build stage ----
 ARG ELIXIR_VERSION=1.19.5
@@ -63,6 +63,6 @@ ENV LC_ALL=en_US.UTF-8
 
 WORKDIR /app
 
-COPY --from=builder /app/_build/prod/rel/money_input_playground ./
+COPY --from=builder /app/_build/prod/rel/localize_inputs_playground ./
 
-CMD ["/app/bin/money_input_playground", "start"]
+CMD ["/app/bin/localize_inputs_playground", "start"]
