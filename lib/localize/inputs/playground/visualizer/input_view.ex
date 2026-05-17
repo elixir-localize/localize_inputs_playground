@@ -11,7 +11,12 @@ if Code.ensure_loaded?(Gettext.Backend) do
       number_input = params.number_input
 
       number_result = parse_number_result(number_input, locale)
-      {:ok, locale_data} = Symbols.number_for_locale(locale)
+
+      locale_data =
+        case Symbols.number_for_locale(locale) do
+          {:ok, data} -> data
+          _ -> %Symbols{locale: locale}
+        end
 
       body = [
         "<section class=\"li-card\">",

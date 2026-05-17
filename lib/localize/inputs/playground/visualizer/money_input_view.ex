@@ -14,7 +14,20 @@ if Code.ensure_loaded?(Gettext.Backend) do
       picker = params.picker
 
       money_result = parse_money_result(money_input, locale, default_currency)
-      {:ok, locale_data} = Currency.currency_for_locale(locale, currency: default_currency)
+
+      # Bogus currency from URL state — fall back to the
+      # locale's natural currency rather than 500ing.
+      locale_data =
+        case Currency.currency_for_locale(locale, currency: default_currency) do
+          {:ok, data} ->
+            data
+
+          {:error, _} ->
+            case Currency.currency_for_locale(locale) do
+              {:ok, data} -> data
+              _ -> %{}
+            end
+        end
 
       body = [
         "<section class=\"li-card\">",

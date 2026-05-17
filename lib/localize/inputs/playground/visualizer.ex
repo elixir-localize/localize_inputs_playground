@@ -253,10 +253,23 @@ if Code.ensure_loaded?(Plug.Router) do
       deployment_default = default_locale(assigns)
       locale = param_locale(params, "locale", deployment_default)
 
+      # NEVER call `String.to_atom/1` on URL/form params —
+      # atoms aren't garbage collected and an attacker
+      # spraying unique codes could exhaust the atom table.
+      # Fall back to locale-derived currency for unknown
+      # codes (CLDR-known currencies are already-existing
+      # atoms via the Money/ex_money tables).
       default_currency =
         case blank_default(Map.get(params, "default_currency"), nil) do
-          nil -> derive_currency_from_locale(locale)
-          code -> String.to_atom(code)
+          nil ->
+            derive_currency_from_locale(locale)
+
+          code ->
+            try do
+              String.to_existing_atom(code)
+            rescue
+              ArgumentError -> derive_currency_from_locale(locale)
+            end
         end
 
       # An empty `"currency"` (the picker's hidden carrier
@@ -383,12 +396,35 @@ if Code.ensure_loaded?(Plug.Router) do
     defp validate_calendar(_), do: :gregorian
 
     defp derive_currency_from_locale(locale) do
-      case Money.Input.Currency.currency_for_locale(locale, currency: nil) do
-        {:ok, %{currency: c}} -> c
+      # `Money.Input.Currency.currency_for_locale/2` returns
+      # `currency: nil` unless you explicitly pass a currency,
+      # so use the locale's territory to pick its current
+      # tender. Territory `:currency` lists are ordered with
+      # the active tender first.
+      with {:ok, language_tag} <- Localize.validate_locale(locale),
+           territory when not is_nil(territory) <- language_tag.territory,
+           {:ok, info} <- Localize.Territory.info(territory),
+           currencies when is_list(currencies) <- Map.get(info, :currency) do
+        active_currency(currencies) || :USD
+      else
         _ -> :USD
       end
     rescue
       _ -> :USD
+    end
+
+    # Pick the first currency in a territory's currency list
+    # that's currently tendered (no `:to` date, `:tender`
+    # not false). `Localize.Territory.info/1` returns a
+    # keyword list ordered with the active tender first.
+    defp active_currency(currencies) when is_list(currencies) do
+      Enum.find_value(currencies, fn {code, meta} ->
+        cond do
+          Map.get(meta, :tender) == false -> nil
+          Map.has_key?(meta, :to) -> nil
+          true -> code
+        end
+      end)
     end
 
     defp param_locale(params, key, default) do

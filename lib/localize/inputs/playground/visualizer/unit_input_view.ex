@@ -11,7 +11,22 @@ if Code.ensure_loaded?(Gettext.Backend) do
       category = params.category
       unit_input = params.unit_input
 
-      {:ok, unit_data} = Unit.unit_for_locale(locale, category: category)
+      # Bogus category from URL state — fall back to the
+      # default `"length"` rather than 500ing. If even that
+      # fails (e.g. unknown locale), fall through to an
+      # empty `%Unit{}` so the page renders.
+      {unit_data, category} =
+        case Unit.unit_for_locale(locale, category: category) do
+          {:ok, data} ->
+            {data, category}
+
+          _ ->
+            case Unit.unit_for_locale(locale, category: "length") do
+              {:ok, data} -> {data, "length"}
+              _ -> {%Unit{}, category}
+            end
+        end
+
       unit_result = parse_unit_result(unit_input, locale, category)
 
       body = [
