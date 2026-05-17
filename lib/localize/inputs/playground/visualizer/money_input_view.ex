@@ -32,6 +32,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/ex_money_input/Money.Input.Components.html#money_input/1"
+        ),
         "<h2>" <> ~t"Money Input Components" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"Live HEEx renders of <code>Money.Input.Components.money_input/1</code> and <code>Money.Input.Components.currency_picker/1</code>. For a plain number input (no currency) see the <strong>Number</strong> tab.",

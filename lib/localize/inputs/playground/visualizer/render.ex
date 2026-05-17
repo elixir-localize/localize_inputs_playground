@@ -366,5 +366,32 @@ if Code.ensure_loaded?(Gettext.Backend) do
     def code(term) do
       ["<pre class=\"li-code\">", escape(inspect(term, pretty: true, width: 60)), "</pre>"]
     end
+
+    @doc """
+    Renders a small external-link icon anchored to the top-right
+    of a `.li-card`. Used on every component-input card to give
+    the visitor a one-click path to the function's hexdocs page.
+
+    The hover (`title`) text is translatable via Gettext and
+    announces that the link opens in a new tab.
+    """
+    def docs_link(url) when is_binary(url) do
+      title = ~t"View component documentation (opens in a new tab)"
+
+      [
+        ~s(<a class="li-docs-link" href="),
+        escape(url),
+        ~s(" target="_blank" rel="noopener noreferrer" title="),
+        escape(title),
+        ~s(" aria-label="),
+        escape(title),
+        ~s(">),
+        # External-link glyph: square + arrow pointing up-right.
+        ~s(<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">),
+        ~s(<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M10 14L20 4M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6"/>),
+        ~s(</svg>),
+        ~s(</a>)
+      ]
+    end
   end
 end

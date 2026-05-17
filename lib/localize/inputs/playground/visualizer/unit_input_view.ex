@@ -31,6 +31,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/localize_number_inputs/Localize.Inputs.Number.Components.html#unit_input/1"
+        ),
         "<h2>" <> ~t"Unit Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"Live HEEx render of <code>Localize.Inputs.Number.Components.unit_input/1</code> — a locale-aware number paired with a searchable unit picker. The picker is grouped into <strong>Preferred</strong> (units in the locale's measurement system — metric, US, or UK) and <strong>All units</strong> (every known unit in the category). Unit names localize via CLDR.",
@@ -76,12 +79,22 @@ if Code.ensure_loaded?(Gettext.Backend) do
             ~s(<option value="),
             Render.escape(cat),
             ~s(") <> selected <> ">",
-            Render.escape(cat),
+            Render.escape(category_display_name(cat)),
             "</option>"
           ]
         end),
         "</select>"
       ]
+    end
+
+    # CLDR does not currently expose display names for unit
+    # categories themselves (only for individual units within a
+    # category), so we fall back to a capitalised form of the
+    # category key. If a category display name API appears in
+    # Localize in the future, swap the fallback for a lookup
+    # here.
+    defp category_display_name(category) when is_binary(category) do
+      String.capitalize(category)
     end
 
     defp live_unit_input_field(category, value, locale, _unit_data) do

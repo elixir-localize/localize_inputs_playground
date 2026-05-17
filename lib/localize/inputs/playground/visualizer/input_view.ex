@@ -20,6 +20,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/localize_number_inputs/Localize.Inputs.Number.Components.html#number_input/1"
+        ),
         "<h2>" <> ~t"Number Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"Live HEEx render of <code>Localize.Inputs.Number.Components.number_input/1</code>.",

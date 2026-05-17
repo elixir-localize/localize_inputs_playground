@@ -50,6 +50,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/localize_datetime_inputs/Localize.Inputs.Date.Components.html#date_input/1"
+        ),
         "<h2>" <> ~t"Date Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"Live HEEx render of <code>Localize.Inputs.Date.Components.date_input/1</code> — a locale-aware text input paired with a popup calendar grid. The grid is structurally Gregorian; locale-correct labels (Buddhist year, Japanese imperial era, Hijri month names) flow from <code>Intl.DateTimeFormat</code> via the <code>:calendar</code> attribute. Server-side parsing accepts every CLDR pattern plus ISO-8601.",
@@ -57,8 +60,8 @@ if Code.ensure_loaded?(Gettext.Backend) do
         date_form(:input, base, locale, calendar, value, params),
         "</section>",
         result_card(~t"parse_date result", result),
-        date_locale_card(locale, calendar),
         code_card(:input, locale, calendar),
+        date_locale_card(locale, calendar),
         bootstrap_script(base)
       ]
 
@@ -77,6 +80,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/localize_datetime_inputs/Localize.Inputs.Date.Components.html#date_range_input/1"
+        ),
         "<h2>" <> ~t"Date Range Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"Live HEEx render of <code>Localize.Inputs.Date.Components.date_range_input/1</code> — two paired text inputs (from / to), each independently editable, with separate calendar popups. Submits as <code>params[field_from]</code> / <code>params[field_to]</code>; server-side parsing via <code>Calendrical.Date.parse_range/2</code> with the from-to tuple.",
@@ -84,8 +90,8 @@ if Code.ensure_loaded?(Gettext.Backend) do
         date_form(:range, base, locale, calendar, {from, to}, params),
         "</section>",
         result_card(~t"parse_range result", result),
-        date_locale_card(locale, calendar),
         code_card(:range, locale, calendar),
+        date_locale_card(locale, calendar),
         bootstrap_script(base)
       ]
 
@@ -104,6 +110,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/localize_datetime_inputs/Localize.Inputs.Date.Components.html#date_range_picker/1"
+        ),
         "<h2>" <> ~t"Date Range Picker Component" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"Live HEEx render of <code>Localize.Inputs.Date.Components.date_range_picker/1</code> — a unified date-range input with a single shared popover. Click once for the start, hover to preview the range, click again for the end. Third click on a finished range starts a new selection.",
@@ -111,8 +120,8 @@ if Code.ensure_loaded?(Gettext.Backend) do
         date_form(:range_picker, base, locale, calendar, {from, to}, params),
         "</section>",
         result_card(~t"parse_range result", result),
-        date_locale_card(locale, calendar),
         code_card(:range_picker, locale, calendar),
+        date_locale_card(locale, calendar),
         bootstrap_script(base)
       ]
 
@@ -129,6 +138,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
     def render(:live, _params, base) do
       body = [
         "<section class=\"li-card\">",
+        Render.docs_link(
+          "https://hexdocs.pm/localize_datetime_inputs/Localize.Inputs.Date.Components.DatePickerLive.html"
+        ),
         "<h2>" <> ~t"DatePickerLive — server-rendered multi-calendar grid" <> "</h2>",
         "<p class=\"li-desc\">",
         ~t"<code>Localize.Inputs.Date.Components.DatePickerLive</code> is a <code>Phoenix.LiveComponent</code>. The grid renders <strong>server-side</strong> using the configured calendar's own month structure — Hebrew leap-month boundaries, Islamic month rollovers, Persian Esfand's 29/30-day variance all behave correctly. Calendar arithmetic flows through <code>Date.add/2</code>, <code>Date.day_of_week/1</code>, and <code>Date.days_in_month/1</code> on the Calendrical Calendar behaviour module.",

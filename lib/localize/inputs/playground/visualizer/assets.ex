@@ -197,6 +197,7 @@ defmodule Localize.Inputs.Playground.Visualizer.Assets do
   .li-main { max-width: 60rem; margin: 0 auto; padding: 2rem; }
 
   .li-card {
+    position: relative;
     background: var(--li-surface);
     border: 1px solid var(--li-border);
     border-radius: 12px;
@@ -204,8 +205,30 @@ defmodule Localize.Inputs.Playground.Visualizer.Assets do
     margin-bottom: 1.25rem;
     box-shadow: var(--li-shadow-sm);
   }
-  .li-card h2 { font-size: 1rem; margin: 0 0 0.25rem; font-weight: 600; }
+  .li-card h2 { font-size: 1rem; margin: 0 0 0.25rem; font-weight: 600; padding-right: 2rem; }
   .li-card p.li-desc { color: var(--li-text-dim); margin: 0 0 1.25rem; font-size: 0.9rem; max-width: 60ch; }
+
+  .li-docs-link {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    color: var(--li-text-dim);
+    text-decoration: none;
+    transition: color 0.12s ease, background 0.12s ease;
+  }
+  .li-docs-link:hover,
+  .li-docs-link:focus-visible {
+    color: var(--li-text);
+    background: var(--li-bg);
+    outline: none;
+  }
+  .li-docs-link svg { display: block; }
 
   form.li-form {
     display: grid;
