@@ -259,12 +259,24 @@ if Code.ensure_loaded?(Plug.Router) do
           code -> String.to_atom(code)
         end
 
+      # An empty `"currency"` (the picker's hidden carrier
+      # before the user selects anything) would become the
+      # `:""` atom downstream and crash `Money.Input.Components`.
+      # Fall back to the default whenever the form hasn't yet
+      # carried a non-empty currency.
+      currency_or_default = fn raw ->
+        case raw do
+          s when is_binary(s) and s != "" -> s
+          _ -> to_string(default_currency)
+        end
+      end
+
       money_input =
         case Map.get(params, "money_input") do
           %{} = map ->
             %{
               "amount" => Map.get(map, "amount") || "",
-              "currency" => Map.get(map, "currency") || to_string(default_currency)
+              "currency" => currency_or_default.(Map.get(map, "currency"))
             }
 
           str when is_binary(str) and str != "" ->
@@ -274,11 +286,21 @@ if Code.ensure_loaded?(Plug.Router) do
             nil
         end
 
+      # Default the picker to ON for the initial view; honour
+      # the user's choice once the form has been submitted.
+      # The form always carries `submitted=1`, so its absence
+      # marks a first visit.
+      picker =
+        case Map.get(params, "submitted") do
+          nil -> true
+          _ -> Map.get(params, "picker") == "1"
+        end
+
       %{
         locale: locale,
         deployment_default_locale: deployment_default,
         default_currency: default_currency,
-        picker: Map.get(params, "picker") == "1",
+        picker: picker,
         money_input: money_input
       }
     end
