@@ -45,6 +45,7 @@ if Code.ensure_loaded?(Plug.Router) do
     alias Localize.Inputs.Playground.Visualizer.FormatView
     alias Localize.Inputs.Playground.Visualizer.InputView
     alias Localize.Inputs.Playground.Visualizer.LocaleView
+    alias Localize.Inputs.Playground.Visualizer.MoneyInputView
     alias Localize.Inputs.Playground.Visualizer.ParseView
     alias Localize.Inputs.Playground.Visualizer.UnitInputView
 
@@ -101,6 +102,21 @@ if Code.ensure_loaded?(Plug.Router) do
       html(conn, UnitInputView.render(params, base_path(conn)))
     end
 
+    # ── Money section ────────────────────────────────────────
+
+    get "/money" do
+      base = base_path(conn)
+
+      conn
+      |> Plug.Conn.put_resp_header("location", base <> "/money/input")
+      |> Plug.Conn.send_resp(302, "")
+    end
+
+    get "/money/input" do
+      params = parse_params(conn, :money_input)
+      html(conn, MoneyInputView.render(params, base_path(conn)))
+    end
+
     # ── Date section ─────────────────────────────────────────
 
     get "/date" do
@@ -150,6 +166,27 @@ if Code.ensure_loaded?(Plug.Router) do
       |> Plug.Conn.put_resp_content_type("application/javascript")
       |> Plug.Conn.put_resp_header("cache-control", "public, max-age=31536000, immutable")
       |> Plug.Conn.send_resp(200, Assets.component_js())
+    end
+
+    get "/assets/localize_number_inputs.js" do
+      conn
+      |> Plug.Conn.put_resp_content_type("application/javascript")
+      |> Plug.Conn.put_resp_header("cache-control", "public, max-age=31536000, immutable")
+      |> Plug.Conn.send_resp(200, Assets.number_js())
+    end
+
+    get "/assets/localize_datetime_inputs.js" do
+      conn
+      |> Plug.Conn.put_resp_content_type("application/javascript")
+      |> Plug.Conn.put_resp_header("cache-control", "public, max-age=31536000, immutable")
+      |> Plug.Conn.send_resp(200, Assets.date_js())
+    end
+
+    get "/assets/money_input.js" do
+      conn
+      |> Plug.Conn.put_resp_content_type("application/javascript")
+      |> Plug.Conn.put_resp_header("cache-control", "public, max-age=31536000, immutable")
+      |> Plug.Conn.send_resp(200, Assets.money_js())
     end
 
     get "/assets/logo.png" do
@@ -212,6 +249,40 @@ if Code.ensure_loaded?(Plug.Router) do
       }
     end
 
+    defp parse_params(params, :money_input, assigns) do
+      deployment_default = default_locale(assigns)
+      locale = param_locale(params, "locale", deployment_default)
+
+      default_currency =
+        case blank_default(Map.get(params, "default_currency"), nil) do
+          nil -> derive_currency_from_locale(locale)
+          code -> String.to_atom(code)
+        end
+
+      money_input =
+        case Map.get(params, "money_input") do
+          %{} = map ->
+            %{
+              "amount" => Map.get(map, "amount") || "",
+              "currency" => Map.get(map, "currency") || to_string(default_currency)
+            }
+
+          str when is_binary(str) and str != "" ->
+            %{"amount" => str, "currency" => to_string(default_currency)}
+
+          _ ->
+            nil
+        end
+
+      %{
+        locale: locale,
+        deployment_default_locale: deployment_default,
+        default_currency: default_currency,
+        picker: Map.get(params, "picker") == "1",
+        money_input: money_input
+      }
+    end
+
     defp parse_params(params, :date_input, assigns) do
       deployment_default = default_locale(assigns)
       locale = param_locale(params, "locale", deployment_default)
@@ -221,38 +292,59 @@ if Code.ensure_loaded?(Plug.Router) do
         locale: locale,
         deployment_default_locale: deployment_default,
         calendar: validate_calendar(calendar_str),
-        value: blank_default(Map.get(params, "date"), nil)
+        value: prefer_iso(params, "date")
       }
     end
 
     defp parse_params(params, :date_range, assigns) do
       deployment_default = default_locale(assigns)
       locale = param_locale(params, "locale", deployment_default)
+      calendar_str = blank_default(Map.get(params, "calendar"), "gregorian")
 
       %{
         locale: locale,
         deployment_default_locale: deployment_default,
-        value_from: blank_default(Map.get(params, "trip_from"), nil),
-        value_to: blank_default(Map.get(params, "trip_to"), nil)
+        calendar: validate_calendar(calendar_str),
+        value_from: prefer_iso(params, "trip_from"),
+        value_to: prefer_iso(params, "trip_to")
       }
     end
 
     defp parse_params(params, :date_range_picker, assigns) do
       deployment_default = default_locale(assigns)
       locale = param_locale(params, "locale", deployment_default)
+      calendar_str = blank_default(Map.get(params, "calendar"), "gregorian")
       trip = Map.get(params, "trip") || %{}
 
       %{
         locale: locale,
         deployment_default_locale: deployment_default,
-        value_from: blank_default(Map.get(trip, "from"), nil),
-        value_to: blank_default(Map.get(trip, "to"), nil)
+        calendar: validate_calendar(calendar_str),
+        value_from: prefer_iso(trip, "from"),
+        value_to: prefer_iso(trip, "to")
       }
     end
 
     defp parse_params(_params, :date_live, assigns) do
       deployment_default = default_locale(assigns)
       %{deployment_default_locale: deployment_default}
+    end
+
+    # The picker submits BOTH the user-visible (`<field>`) and
+    # the canonical ISO (`<field>_iso`) carrier. Prefer the ISO
+    # when present and valid — it round-trips perfectly across
+    # every calendar/locale and isn't subject to browser
+    # `Intl.DateTimeFormat` quirks (e.g. month names rendered
+    # as "Mo3" instead of "Heshvan" when the browser lacks
+    # full calendar data).
+    defp prefer_iso(params, field) do
+      iso = blank_default(Map.get(params, "#{field}_iso"), nil)
+      visible = blank_default(Map.get(params, field), nil)
+
+      case iso && Date.from_iso8601(iso) do
+        {:ok, _} -> iso
+        _ -> visible
+      end
     end
 
     defp validate_calendar(name) when is_binary(name) do
@@ -267,6 +359,15 @@ if Code.ensure_loaded?(Plug.Router) do
     end
 
     defp validate_calendar(_), do: :gregorian
+
+    defp derive_currency_from_locale(locale) do
+      case Money.Input.Currency.currency_for_locale(locale, currency: nil) do
+        {:ok, %{currency: c}} -> c
+        _ -> :USD
+      end
+    rescue
+      _ -> :USD
+    end
 
     defp param_locale(params, key, default) do
       case Map.get(params, key) do

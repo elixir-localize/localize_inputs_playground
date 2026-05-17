@@ -83,6 +83,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       sections = [
         {"number", ~t"Number"},
         {"unit", ~t"Unit"},
+        {"money", ~t"Money"},
         {"date", ~t"Date"}
       ]
 
@@ -96,6 +97,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
           ]
 
         "unit" ->
+          [{"input", ~t"Input"}]
+
+        "money" ->
           [{"input", ~t"Input"}]
 
         "date" ->
@@ -176,7 +180,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       [
         "<footer class=\"li-footer\">",
         "<p>",
-        ~t"Headless API: <code>Localize.Inputs.Parser</code>, <code>Localize.Inputs.Validator</code>, <code>Localize.Inputs.Number</code>.",
+        ~t"Headless API: <code>Localize.Inputs.Number.Parser</code>, <code>Localize.Inputs.Number.Validator</code>, <code>Localize.Inputs.Number.Symbols</code>, <code>Localize.Inputs.Date.Parser</code>, <code>Localize.Inputs.Date.Validator</code>.",
         "</p>",
         "</footer>"
       ]

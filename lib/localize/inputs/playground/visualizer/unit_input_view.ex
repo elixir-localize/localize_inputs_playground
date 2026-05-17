@@ -3,7 +3,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
     use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
-    alias Localize.Inputs.{Components, Unit, Validator}
+    alias Localize.Inputs.Number.{Components, Unit, Validator}
     alias Localize.Inputs.Playground.Visualizer.Render
 
     def render(params, base) do
@@ -18,7 +18,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Unit Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"Live HEEx render of <code>Localize.Inputs.Components.unit_input/1</code> — a locale-aware number paired with a searchable unit picker. The picker is grouped into <strong>Preferred</strong> (units in the locale's measurement system — metric, US, or UK) and <strong>All units</strong> (every known unit in the category). Unit names localize via CLDR.",
+        ~t"Live HEEx render of <code>Localize.Inputs.Number.Components.unit_input/1</code> — a locale-aware number paired with a searchable unit picker. The picker is grouped into <strong>Preferred</strong> (units in the locale's measurement system — metric, US, or UK) and <strong>All units</strong> (every known unit in the category). Unit names localize via CLDR.",
         "</p>",
         "<form method=\"get\" action=\"",
         Render.escape(base),
@@ -176,7 +176,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Resolved unit data" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"What <code>Localize.Inputs.Unit.unit_for_locale/2</code> returns for the current locale + category — measurement system, preferred unit list, and the full category catalogue. Names localize via CLDR.",
+        ~t"What <code>Localize.Inputs.Number.Unit.unit_for_locale/2</code> returns for the current locale + category — measurement system, preferred unit list, and the full category catalogue. Names localize via CLDR.",
         "</p>",
         Render.code(unit_data)
       ]
@@ -192,7 +192,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       amount = Map.get(value, "amount") || Map.get(value, :amount)
       unit = Map.get(value, "unit") || Map.get(value, :unit)
 
-      case Localize.Inputs.Parser.parse_number(amount, locale: locale) do
+      case Localize.Inputs.Number.Parser.parse_number(amount, locale: locale) do
         {:ok, nil} ->
           nil
 

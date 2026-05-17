@@ -20,7 +20,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
     #                         component live here — just describe
     #                         how to use it).
 
-    alias Localize.Inputs.{Components, Parser, Validator}
+    alias Localize.Inputs.Date.{Components, Parser, Validator}
     alias Localize.Inputs.Playground.Visualizer.Render
 
     @calendars [
@@ -46,17 +46,18 @@ if Code.ensure_loaded?(Gettext.Backend) do
       calendar = params.calendar
       value = params.value
 
-      result = parse_date_result(value, locale)
+      result = parse_date_result(value, locale, calendar)
 
       body = [
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Date Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"Live HEEx render of <code>Localize.Inputs.Components.date_input/1</code> — a locale-aware text input paired with a popup calendar grid. The grid is structurally Gregorian; locale-correct labels (Buddhist year, Japanese imperial era, Hijri month names) flow from <code>Intl.DateTimeFormat</code> via the <code>:calendar</code> attribute. Server-side parsing accepts every CLDR pattern plus ISO-8601.",
+        ~t"Live HEEx render of <code>Localize.Inputs.Date.Components.date_input/1</code> — a locale-aware text input paired with a popup calendar grid. The grid is structurally Gregorian; locale-correct labels (Buddhist year, Japanese imperial era, Hijri month names) flow from <code>Intl.DateTimeFormat</code> via the <code>:calendar</code> attribute. Server-side parsing accepts every CLDR pattern plus ISO-8601.",
         "</p>",
         date_form(:input, base, locale, calendar, value, params),
         "</section>",
         result_card(~t"parse_date result", result),
+        date_locale_card(locale, calendar),
         code_card(:input, locale, calendar),
         bootstrap_script(base)
       ]
@@ -68,21 +69,23 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
     def render(:range, params, base) do
       locale = params.locale
+      calendar = params.calendar
       from = params.value_from
       to = params.value_to
 
-      result = parse_range_pair_result(from, to, locale)
+      result = parse_range_pair_result(from, to, locale, calendar)
 
       body = [
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Date Range Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"Live HEEx render of <code>Localize.Inputs.Components.date_range_input/1</code> — two paired text inputs (from / to), each independently editable, with separate calendar popups. Submits as <code>params[field_from]</code> / <code>params[field_to]</code>; server-side parsing via <code>Calendrical.Date.parse_range/2</code> with the from-to tuple.",
+        ~t"Live HEEx render of <code>Localize.Inputs.Date.Components.date_range_input/1</code> — two paired text inputs (from / to), each independently editable, with separate calendar popups. Submits as <code>params[field_from]</code> / <code>params[field_to]</code>; server-side parsing via <code>Calendrical.Date.parse_range/2</code> with the from-to tuple.",
         "</p>",
-        date_form(:range, base, locale, :gregorian, {from, to}, params),
+        date_form(:range, base, locale, calendar, {from, to}, params),
         "</section>",
         result_card(~t"parse_range result", result),
-        code_card(:range, locale, :gregorian),
+        date_locale_card(locale, calendar),
+        code_card(:range, locale, calendar),
         bootstrap_script(base)
       ]
 
@@ -93,21 +96,23 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
     def render(:range_picker, params, base) do
       locale = params.locale
+      calendar = params.calendar
       from = params.value_from
       to = params.value_to
 
-      result = parse_range_pair_result(from, to, locale)
+      result = parse_range_pair_result(from, to, locale, calendar)
 
       body = [
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Date Range Picker Component" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"Live HEEx render of <code>Localize.Inputs.Components.date_range_picker/1</code> — a unified date-range input with a single shared popover. Click once for the start, hover to preview the range, click again for the end. Third click on a finished range starts a new selection.",
+        ~t"Live HEEx render of <code>Localize.Inputs.Date.Components.date_range_picker/1</code> — a unified date-range input with a single shared popover. Click once for the start, hover to preview the range, click again for the end. Third click on a finished range starts a new selection.",
         "</p>",
-        date_form(:range_picker, base, locale, :gregorian, {from, to}, params),
+        date_form(:range_picker, base, locale, calendar, {from, to}, params),
         "</section>",
         result_card(~t"parse_range result", result),
-        code_card(:range_picker, locale, :gregorian),
+        date_locale_card(locale, calendar),
+        code_card(:range_picker, locale, calendar),
         bootstrap_script(base)
       ]
 
@@ -126,7 +131,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<section class=\"li-card\">",
         "<h2>" <> ~t"DatePickerLive — server-rendered multi-calendar grid" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"<code>Localize.Inputs.Components.DatePickerLive</code> is a <code>Phoenix.LiveComponent</code>. The grid renders <strong>server-side</strong> using the configured calendar's own month structure — Hebrew leap-month boundaries, Islamic month rollovers, Persian Esfand's 29/30-day variance all behave correctly. Calendar arithmetic flows through <code>Date.add/2</code>, <code>Date.day_of_week/1</code>, and <code>Date.days_in_month/1</code> on the Calendrical Calendar behaviour module.",
+        ~t"<code>Localize.Inputs.Date.Components.DatePickerLive</code> is a <code>Phoenix.LiveComponent</code>. The grid renders <strong>server-side</strong> using the configured calendar's own month structure — Hebrew leap-month boundaries, Islamic month rollovers, Persian Esfand's 29/30-day variance all behave correctly. Calendar arithmetic flows through <code>Date.add/2</code>, <code>Date.day_of_week/1</code>, and <code>Date.days_in_month/1</code> on the Calendrical Calendar behaviour module.",
         "</p>",
         "<p class=\"li-desc\">",
         ~t"This playground is a plain Plug router — it can't host a LiveView, so the component isn't mountable here. Use it inside any Phoenix LiveView like so:",
@@ -172,10 +177,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
             always_include: [params.deployment_default_locale]
           )
         ),
-        if(variant == :input or variant == :range_picker,
-          do: Render.field(~t"Calendar", calendar_select(calendar)),
-          else: ""
-        ),
+        Render.field(~t"Calendar", calendar_select(calendar, locale)),
         date_field(variant, value, locale, calendar),
         "<div class=\"li-actions\">",
         "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse" <> "</button>",
@@ -184,7 +186,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
-    defp calendar_select(current) do
+    defp calendar_select(current, locale) do
       [
         ~s(<select name="calendar" data-li-reactive>),
         Enum.map(@calendars, fn cal ->
@@ -194,12 +196,21 @@ if Code.ensure_loaded?(Gettext.Backend) do
             ~s(<option value="),
             Atom.to_string(cal),
             ~s(") <> selected <> ">",
-            Atom.to_string(cal),
+            Render.escape(calendar_display_name(cal, locale)),
             "</option>"
           ]
         end),
         "</select>"
       ]
+    end
+
+    defp calendar_display_name(cal, locale) do
+      case Localize.Calendar.display_name(:calendar, cal, locale: locale) do
+        {:ok, name} -> name
+        _ -> Atom.to_string(cal)
+      end
+    rescue
+      _ -> Atom.to_string(cal)
     end
 
     defp date_field(:input, value, locale, calendar) do
@@ -223,7 +234,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
-    defp date_field(:range, {from, to}, locale, _calendar) do
+    defp date_field(:range, {from, to}, locale, calendar) do
       form =
         Phoenix.HTML.FormData.to_form(
           %{"trip_from" => from || "", "trip_to" => to || ""},
@@ -240,7 +251,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         placeholder_from: nil,
         placeholder_to: nil,
         display_format: :medium,
-        calendar: :gregorian,
+        calendar: calendar,
         variant: :auto,
         js: true,
         class: nil,
@@ -326,11 +337,11 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
     # ── Result cards ────────────────────────────────────────
 
-    defp parse_date_result(nil, _locale), do: nil
-    defp parse_date_result("", _locale), do: nil
+    defp parse_date_result(nil, _locale, _calendar), do: nil
+    defp parse_date_result("", _locale, _calendar), do: nil
 
-    defp parse_date_result(value, locale) when is_binary(value) do
-      parsed = Parser.parse_date(value, locale: locale)
+    defp parse_date_result(value, locale, calendar) when is_binary(value) do
+      parsed = Parser.parse_date(value, locale: locale, calendar: calendar)
       validation = Validator.validate_date(extract_date(parsed))
 
       [
@@ -340,13 +351,16 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
-    defp parse_range_pair_result(nil, nil, _locale), do: nil
-    defp parse_range_pair_result("", "", _locale), do: nil
+    defp parse_range_pair_result(nil, nil, _locale, _calendar), do: nil
+    defp parse_range_pair_result("", "", _locale, _calendar), do: nil
 
-    defp parse_range_pair_result(from, to, locale) do
+    defp parse_range_pair_result(from, to, locale, calendar) do
       from = from || ""
       to = to || ""
-      parsed = Calendrical.Date.parse_range({from, to}, locale: locale)
+      # `Date.Range` is ISO-only (stdlib constraint), so
+      # `parse_range/2` returns ISO endpoints. The single-date
+      # parser carries the chosen calendar through natively.
+      parsed = Calendrical.Date.parse_range({from, to}, locale: locale, calendar: calendar)
       validation = Validator.validate_date_range(extract_range(parsed))
 
       [
@@ -396,6 +410,78 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
+    # ── Resolved locale + calendar data card ───────────────
+
+    defp date_locale_card(locale, calendar) do
+      data = resolve_date_locale_data(locale, calendar)
+
+      [
+        "<section class=\"li-card\">",
+        "<h2>" <> ~t"Resolved locale + calendar data" <> "</h2>",
+        "<p class=\"li-desc\">",
+        ~t"CLDR date patterns and locale-specific metadata for the current locale + calendar — the data that drives <code>Localize.Date.to_string/2</code> and the picker grid rendering.",
+        "</p>",
+        Render.code(data)
+      ]
+    end
+
+    defp resolve_date_locale_data(locale, calendar) do
+      %{
+        locale: locale,
+        calendar: calendar,
+        first_day_of_week: safe_first_day(locale),
+        patterns: safe_date_formats(locale, calendar),
+        sample: sample_formats(locale, calendar)
+      }
+    end
+
+    defp safe_first_day(locale) do
+      case Localize.Calendar.first_day_for_locale(locale) do
+        n when is_integer(n) -> n
+        _ -> nil
+      end
+    rescue
+      _ -> nil
+    end
+
+    defp safe_date_formats(locale, calendar) do
+      case Localize.DateTime.Format.date_formats(locale, calendar) do
+        {:ok, formats} -> formats
+        _ -> %{}
+      end
+    rescue
+      _ -> %{}
+    end
+
+    defp sample_formats(locale, calendar) do
+      today = convert_to_calendar(Date.utc_today(), calendar)
+
+      for format <- [:short, :medium, :long, :full], into: %{} do
+        formatted =
+          case Localize.Date.to_string(today, locale: locale, format: format) do
+            {:ok, s} -> s
+            _ -> nil
+          end
+
+        {format, formatted}
+      end
+    rescue
+      _ -> %{}
+    end
+
+    defp convert_to_calendar(date, :gregorian), do: date
+
+    defp convert_to_calendar(date, calendar) do
+      with {:ok, module} <- Calendrical.calendar_from_cldr_calendar_type(calendar),
+           {:ok, converted} <- Date.convert(date, module) do
+        converted
+      else
+        _ -> date
+      end
+    rescue
+      _ -> date
+    end
+
     # ── Code card ───────────────────────────────────────────
 
     defp code_card(variant, locale, calendar) do
@@ -433,11 +519,21 @@ if Code.ensure_loaded?(Gettext.Backend) do
       />\
       """
 
-    defp build_code_snippet(:range, locale, _calendar),
+    defp build_code_snippet(:range, locale, :gregorian),
       do: """
       <.date_range_input
         form={@form}
         field={:trip}
+        locale=#{format_locale_attr(locale)}
+      />\
+      """
+
+    defp build_code_snippet(:range, locale, calendar),
+      do: """
+      <.date_range_input
+        form={@form}
+        field={:trip}
+        calendar=#{inspect(calendar)}
         locale=#{format_locale_attr(locale)}
       />\
       """
@@ -467,7 +563,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
     defp live_usage_snippet,
       do: """
       <.live_component
-        module={Localize.Inputs.Components.DatePickerLive}
+        module={Localize.Inputs.Date.Components.DatePickerLive}
         id="event-date"
         form={@form}
         field={:date}

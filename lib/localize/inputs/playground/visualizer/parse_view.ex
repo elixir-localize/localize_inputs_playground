@@ -3,7 +3,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
     use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
-    alias Localize.Inputs.Parser
+    alias Localize.Inputs.Number.Parser
     alias Localize.Inputs.Playground.Visualizer.Render
 
     def render(params, base) do
@@ -18,7 +18,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Cross-locale parsing" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"Same input, every locale. Demonstrates how <code>Localize.Inputs.Parser</code> interprets the decimal and grouping separators per locale.",
+        ~t"Same input, every locale. Demonstrates how <code>Localize.Inputs.Number.Parser</code> interprets the decimal and grouping separators per locale.",
         "</p>",
         "<form method=\"get\" action=\"",
         Render.escape(base),

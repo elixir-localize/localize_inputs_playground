@@ -3,7 +3,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
     use Localize.Message.Sigils, backend: Localize.Inputs.Playground.Gettext
     @moduledoc false
 
-    alias Localize.Inputs.{Components, Number, Parser, Validator}
+    alias Localize.Inputs.Number.{Components, Parser, Symbols, Validator}
     alias Localize.Inputs.Playground.Visualizer.Render
 
     def render(params, base) do
@@ -11,13 +11,13 @@ if Code.ensure_loaded?(Gettext.Backend) do
       number_input = params.number_input
 
       number_result = parse_number_result(number_input, locale)
-      {:ok, locale_data} = Number.number_for_locale(locale)
+      {:ok, locale_data} = Symbols.number_for_locale(locale)
 
       body = [
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Number Input Component" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"Live HEEx render of <code>Localize.Inputs.Components.number_input/1</code>.",
+        ~t"Live HEEx render of <code>Localize.Inputs.Number.Components.number_input/1</code>.",
         "</p>",
         "<form method=\"get\" action=\"",
         Render.escape(base),
@@ -153,7 +153,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<section class=\"li-card\">",
         "<h2>" <> ~t"Resolved locale data" <> "</h2>",
         "<p class=\"li-desc\">",
-        ~t"What <code>Localize.Inputs.Number.number_for_locale/1</code> returns for the current locale — the data the JS hook reads from <code>data-</code> attributes.",
+        ~t"What <code>Localize.Inputs.Number.Symbols.number_for_locale/1</code> returns for the current locale — the data the JS hook reads from <code>data-</code> attributes.",
         "</p>",
         Render.code(locale_data)
       ]

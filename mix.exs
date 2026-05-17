@@ -45,7 +45,7 @@ defmodule Localize.Inputs.Playground.MixProject do
       source_ref: "v#{@version}",
       main: "readme",
       extras: ["README.md", "CHANGELOG.md", "LICENSE.md"],
-      formatters: ["html"],
+      formatters: ["html", "markdown"],
       groups_for_modules: groups_for_modules(),
       skip_code_autolink_to: [
         "Plug.Conn.t/0",
@@ -71,10 +71,14 @@ defmodule Localize.Inputs.Playground.MixProject do
     [
       # Path overrides for local development. Before publishing,
       # flip these back to hex versions in the order:
-      # localize → calendrical → localize_inputs.
-      {:localize, path: "../localize", override: true},
-      {:calendrical, path: "../calendrical", override: true},
-      {:localize_inputs, "~> 0.1", path: "../localize_inputs"},
+      # localize → calendrical → localize_inputs_core →
+      # localize_number_inputs → localize_datetime_inputs → money_input.
+      {:localize, "~> 0.37"},
+      {:calendrical, "~> 0.5"},
+      {:localize_inputs_core, "~> 0.1"},
+      {:localize_number_inputs, "~> 0.1"},
+      {:localize_datetime_inputs, "~> 0.1"},
+      {:ex_money_input, "~> 0.1"},
       {:localize_web, "~> 0.7"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_view, "~> 1.0"},

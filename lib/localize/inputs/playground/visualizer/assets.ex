@@ -376,25 +376,80 @@ defmodule Localize.Inputs.Playground.Visualizer.Assets do
   @spec css() :: String.t()
   def css, do: @css
 
-  @external_resource Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.css")
-  @external_resource Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.js")
-  @external_resource Path.join(:code.priv_dir(:localize_inputs_playground), "static/localize.png")
-
-  @component_css File.read!(
-                   Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.css")
+  @core_css_path Path.join(
+                   :code.priv_dir(:localize_inputs_core),
+                   "static/localize_inputs_core.css"
                  )
-  @component_js File.read!(
-                  Path.join(:code.priv_dir(:localize_inputs), "static/localize_inputs.js")
+  @number_css_path Path.join(
+                     :code.priv_dir(:localize_number_inputs),
+                     "static/localize_number_inputs.css"
+                   )
+  @number_js_path Path.join(
+                    :code.priv_dir(:localize_number_inputs),
+                    "static/localize_number_inputs.js"
+                  )
+  @date_css_path Path.join(
+                   :code.priv_dir(:localize_datetime_inputs),
+                   "static/localize_datetime_inputs.css"
+                 )
+  @date_js_path Path.join(
+                  :code.priv_dir(:localize_datetime_inputs),
+                  "static/localize_datetime_inputs.js"
                 )
-  @logo_png File.read!(
-              Path.join(:code.priv_dir(:localize_inputs_playground), "static/localize.png")
-            )
+  @money_css_path Path.join(:code.priv_dir(:ex_money_input), "static/money_input.css")
+  @money_js_path Path.join(:code.priv_dir(:ex_money_input), "static/money_input.js")
+  @logo_path Path.join(:code.priv_dir(:localize_inputs_playground), "static/localize.png")
+
+  @external_resource @core_css_path
+  @external_resource @number_css_path
+  @external_resource @number_js_path
+  @external_resource @date_css_path
+  @external_resource @date_js_path
+  @external_resource @money_css_path
+  @external_resource @money_js_path
+  @external_resource @logo_path
+
+  @component_css File.read!(@core_css_path) <>
+                   "\n" <>
+                   File.read!(@number_css_path) <>
+                   "\n" <>
+                   File.read!(@date_css_path) <>
+                   "\n" <>
+                   File.read!(@money_css_path)
+  @number_js File.read!(@number_js_path)
+  @date_js File.read!(@date_js_path)
+
+  # Cannot concatenate the two source files: each declares its
+  # own `export default {...}` and two default exports in a
+  # single ES module is a syntax error (the whole bundle fails
+  # to parse, no hooks mount, no picker opens). Serve each
+  # source file at its own URL and emit a shim here that
+  # re-exports a merged namespace, so consumers can keep
+  # importing `Hooks` from a single URL.
+  @component_js """
+  import NumberHooks from "./localize_number_inputs.js";
+  import DateHooks   from "./localize_datetime_inputs.js";
+  export default { ...NumberHooks, ...DateHooks };
+  export const { NumberInput, UnitPicker, configure } = NumberHooks;
+  export const { DatePicker, RangePicker } = DateHooks;
+  """
+  @money_js File.read!(@money_js_path)
+  @logo_png File.read!(@logo_path)
 
   @spec component_css() :: String.t()
   def component_css, do: @component_css
 
   @spec component_js() :: String.t()
   def component_js, do: @component_js
+
+  @spec number_js() :: String.t()
+  def number_js, do: @number_js
+
+  @spec date_js() :: String.t()
+  def date_js, do: @date_js
+
+  @spec money_js() :: String.t()
+  def money_js, do: @money_js
 
   def logo_png, do: @logo_png
 end
