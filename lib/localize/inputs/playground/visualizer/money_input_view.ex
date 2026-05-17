@@ -12,6 +12,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       default_currency = params.default_currency
       money_input = params.money_input
       picker = params.picker
+      preferred = params.preferred_currencies
 
       money_result = parse_money_result(money_input, locale, default_currency)
 
@@ -53,7 +54,8 @@ if Code.ensure_loaded?(Gettext.Backend) do
             ~t"Used when the form value doesn't carry a currency. Maps to the component's `:default_currency` attr."
         ),
         picker_toggle(picker),
-        live_money_input_field(locale, default_currency, money_input, picker),
+        preferred_currencies_field(preferred),
+        live_money_input_field(locale, default_currency, money_input, picker, preferred),
         "<div class=\"li-actions\">",
         "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse & format" <> "</button>",
         "<span class=\"li-hint\">",
@@ -65,7 +67,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "</form>",
         "</section>",
         result_card(~t"money_input result", money_result),
-        code_card(locale, default_currency, picker),
+        code_card(locale, default_currency, picker, preferred),
         locale_card(locale_data),
         bootstrap_script(base)
       ]
@@ -73,7 +75,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
       Render.page(title: "Money Input", active: {"money", "input"}, base: base, body: body)
     end
 
-    defp live_money_input_field(locale, default_currency, value, picker) do
+    defp live_money_input_field(locale, default_currency, value, picker, preferred) do
       form =
         make_form("money_input", value, %{
           "currency" => default_currency && to_string(default_currency)
@@ -99,7 +101,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         symbol_kind: :symbol,
         currency_picker: picker,
         allowed_currencies: nil,
-        preferred_currencies: [],
+        preferred_currencies: preferred,
         rest: %{}
       }
 
@@ -138,6 +140,26 @@ if Code.ensure_loaded?(Gettext.Backend) do
         ~t"Embed <code>&lt;.currency_picker&gt;</code> in <code>money_input</code>",
         "</span>",
         "</label>",
+        "</div>"
+      ]
+    end
+
+    defp preferred_currencies_field(preferred) do
+      value = Enum.map_join(preferred, ", ", &to_string/1)
+
+      [
+        "<div class=\"li-field li-field-wide\">",
+        "<label>",
+        "<span>",
+        ~t"Preferred currencies",
+        "</span>",
+        ~s(<input type="text" name="preferred" data-li-reactive value="),
+        Render.escape(value),
+        ~s(" placeholder="USD, EUR, GBP, JPY">),
+        "</label>",
+        "<small class=\"li-hint\">",
+        ~t"Comma-separated ISO codes — pinned to the top of the picker. Tab out or press Enter to apply.",
+        "</small>",
         "</div>"
       ]
     end
@@ -203,8 +225,8 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
-    defp code_card(locale, default_currency, picker) do
-      code = build_money_call(locale, default_currency, picker)
+    defp code_card(locale, default_currency, picker, preferred) do
+      code = build_money_call(locale, default_currency, picker, preferred)
 
       [
         "<section class=\"li-card\">",
@@ -219,14 +241,16 @@ if Code.ensure_loaded?(Gettext.Backend) do
       ]
     end
 
-    defp build_money_call(locale, default_currency, picker) do
+    defp build_money_call(locale, default_currency, picker, preferred) do
       attrs =
         [
           ~s(  form={@form}),
           ~s(  field={:price}),
           ~s(  locale=#{format_locale_attr(locale)}),
           default_currency && ~s(  default_currency={:#{default_currency}}),
-          picker && ~s(  currency_picker={true})
+          picker && ~s(  currency_picker={true}),
+          picker && preferred != [] &&
+            ~s(  preferred_currencies={#{format_atom_list(preferred)}})
         ]
         |> Enum.reject(&is_nil/1)
         |> Enum.reject(&(&1 == false))
@@ -236,6 +260,11 @@ if Code.ensure_loaded?(Gettext.Backend) do
 
     defp format_locale_attr(locale) when is_binary(locale), do: ~s("#{locale}")
     defp format_locale_attr(locale) when is_atom(locale), do: ~s(:#{locale})
+
+    defp format_atom_list(list) do
+      inner = Enum.map_join(list, ", ", fn atom -> ":#{atom}" end)
+      "[" <> inner <> "]"
+    end
 
     defp locale_card(locale_data) do
       [

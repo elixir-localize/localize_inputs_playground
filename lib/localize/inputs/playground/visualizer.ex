@@ -309,11 +309,22 @@ if Code.ensure_loaded?(Plug.Router) do
           _ -> Map.get(params, "picker") == "1"
         end
 
+      # Sensible default: USD/EUR/GBP/JPY (the four most-traded
+      # currencies). On first visit (no `submitted` param) use
+      # the defaults; once the user has submitted, honour
+      # whatever they typed (including emptying the field).
+      preferred =
+        case Map.get(params, "submitted") do
+          nil -> default_preferred_currencies()
+          _ -> parse_preferred_currencies(Map.get(params, "preferred"))
+        end
+
       %{
         locale: locale,
         deployment_default_locale: deployment_default,
         default_currency: default_currency,
         picker: picker,
+        preferred_currencies: preferred,
         money_input: money_input
       }
     end
@@ -394,6 +405,31 @@ if Code.ensure_loaded?(Plug.Router) do
     end
 
     defp validate_calendar(_), do: :gregorian
+
+    defp default_preferred_currencies, do: [:USD, :EUR, :GBP, :JPY]
+
+    # Parse a comma-separated list of ISO currency codes from
+    # a URL/form value. Uses `String.to_existing_atom/1` per
+    # the atom-safety rule — unknown / typo'd codes are
+    # silently dropped, the rest pass through. Empty list is
+    # respected (user intentionally cleared the field).
+    defp parse_preferred_currencies(nil), do: []
+    defp parse_preferred_currencies(""), do: []
+
+    defp parse_preferred_currencies(binary) when is_binary(binary) do
+      binary
+      |> String.split(~r/[\s,]+/, trim: true)
+      |> Enum.map(&String.upcase/1)
+      |> Enum.flat_map(fn code ->
+        try do
+          [String.to_existing_atom(code)]
+        rescue
+          ArgumentError -> []
+        end
+      end)
+    end
+
+    defp parse_preferred_currencies(_), do: []
 
     defp derive_currency_from_locale(locale) do
       # `Money.Input.Currency.currency_for_locale/2` returns
