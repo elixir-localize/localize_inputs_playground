@@ -69,13 +69,13 @@ defmodule Localize.Inputs.Playground.MixProject do
 
   defp deps do
     [
-      {:localize, "~> 0.37"},
-      {:calendrical, "~> 0.5"},
-      {:localize_inputs_core, "~> 0.1"},
-      {:localize_number_inputs, "~> 0.1"},
-      {:localize_datetime_inputs, "~> 0.1"},
-      {:ex_money_input, "~> 0.1"},
-      {:localize_web, "~> 0.7"},
+      {:localize, "~> 1.0"},
+      {:calendrical, "~> 1.0"},
+      {:localize_inputs_core, "~> 0.2"},
+      {:localize_number_inputs, "~> 0.2"},
+      {:localize_datetime_inputs, "~> 0.2"},
+      {:ex_money_input, "~> 0.3"},
+      {:localize_web, "~> 1.0"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_view, "~> 1.0"},
       {:gettext, "~> 1.0"},
