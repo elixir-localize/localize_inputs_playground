@@ -32,9 +32,12 @@ PORT=4003 IP=loopback mix run --no-halt
 
 ## Embedding into your own Phoenix dev router
 
+This package is not published to hex, so depend on it from git:
+
 ```elixir
 # mix.exs
-{:localize_inputs_playground, "~> 0.1", only: :dev}
+{:localize_inputs_playground,
+ github: "elixir-localize/localize_inputs_playground", only: :dev}
 
 # router.ex
 if Mix.env() == :dev do
