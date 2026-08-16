@@ -1,12 +1,12 @@
 # Localize.Inputs.Playground
 
-A standalone deployment wrapper for [`Localize.Inputs.Playground.Visualizer`](lib/localize/inputs/playground/visualizer.ex) — the locale-aware number input demo that previously shipped with the [`localize_inputs`](https://hex.pm/packages/localize_inputs) library.
+A standalone deployment wrapper for [`Localize.Inputs.Playground.Visualizer`](lib/localize/inputs/playground/visualizer.ex) — the locale-aware number input demo that previously lived in the input components library, and has never been published to hex.
 
 The live instance runs at **<https://localize-inputs-playground.fly.dev>**.
 
 ## What it is
 
-The `localize_inputs` library no longer ships a visualizer — moved here in 0.2 to keep the library itself focused on the components + headless API. This package bundles:
+The input component libraries no longer ship a visualizer — moved here in 0.2 to keep them focused on the components + headless API. This package bundles:
 
 - **`Localize.Inputs.Playground.Visualizer`** — Plug.Router with `/input`, `/parse`, `/format`, `/locale` tabs that demo the component across every CLDR locale.
 - **`Localize.Inputs.Playground.Application`** — supervises a Bandit listener.
@@ -14,7 +14,7 @@ The `localize_inputs` library no longer ships a visualizer — moved here in 0.2
 - **`Localize.Inputs.Playground.Gettext`** — Gettext backend with the visualizer's UI catalog. Ships translations for en, de, fr, ja, es, pt, it, zh, ar, fa, he, ru, sv, pl.
 - **`Dockerfile`** + **`fly.toml`** — production deployment to Fly.io.
 
-The `localize_inputs` library itself is unchanged — this package depends on it as a regular hex dep.
+The input component libraries themselves are unchanged — this package depends on `localize_inputs_core`, `localize_number_inputs` and `localize_datetime_inputs` as regular hex deps.
 
 ## Local development
 
