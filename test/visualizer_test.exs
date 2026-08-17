@@ -68,4 +68,76 @@ defmodule Localize.Inputs.Playground.VisualizerTest do
     response = conn.("/does-not-exist", %{})
     assert response.status == 404
   end
+
+  describe "/unit/input unit selection" do
+    test "defaults to the locale's preferred unit", %{conn: conn} do
+      assert selected_unit(conn, %{"locale" => "en", "category" => "length"}) == "inch"
+      assert selected_unit(conn, %{"locale" => "de", "category" => "length"}) == "millimeter"
+      assert selected_unit(conn, %{"locale" => "en", "category" => "mass"}) == "ounce"
+    end
+
+    test "resets when the category changes", %{conn: conn} do
+      assert selected_unit(conn, %{
+               "locale" => "en",
+               "category" => "mass",
+               "unit_input[amount]" => "5",
+               "unit_input[unit]" => "meter"
+             }) == "ounce"
+    end
+
+    test "resets when the locale changes", %{conn: conn} do
+      assert selected_unit(conn, %{
+               "locale" => "de",
+               "category" => "length",
+               "previous_locale" => "en",
+               "unit_input[amount]" => "5",
+               "unit_input[unit]" => "inch"
+             }) == "millimeter"
+    end
+
+    test "keeps the user's unit when neither locale nor category changed", %{conn: conn} do
+      assert selected_unit(conn, %{
+               "locale" => "en",
+               "category" => "length",
+               "previous_locale" => "en",
+               "unit_input[amount]" => "5",
+               "unit_input[unit]" => "yard"
+             }) == "yard"
+    end
+
+    test "honours a valid unit from a shared URL carrying no previous locale", %{conn: conn} do
+      assert selected_unit(conn, %{
+               "locale" => "de",
+               "category" => "length",
+               "unit_input[amount]" => "5",
+               "unit_input[unit]" => "foot"
+             }) == "foot"
+    end
+
+    test "falls back to the default for an unknown unit", %{conn: conn} do
+      for bad <- ["", "garbage", "🙂", "meter-per-nonsense"] do
+        assert selected_unit(conn, %{
+                 "locale" => "en",
+                 "category" => "length",
+                 "unit_input[amount]" => "5",
+                 "unit_input[unit]" => bad
+               }) == "inch"
+      end
+    end
+
+    test "emits the previous locale so the next submit can detect a switch", %{conn: conn} do
+      response = conn.("/unit/input", %{"locale" => "de", "category" => "length"})
+      assert response.resp_body =~ ~s(name="previous_locale" value="de")
+    end
+  end
+
+  # The unit the rendered picker reports as selected, read
+  # back out of its hidden carrier input.
+  defp selected_unit(conn, params) do
+    response = conn.("/unit/input", Map.put(params, "submitted", "1"))
+    assert response.status == 200
+
+    [_, unit] = Regex.run(~r/name="unit_input\[unit\]"[^>]*value="([^"]*)"/, response.resp_body)
+    unit
+  end
 end

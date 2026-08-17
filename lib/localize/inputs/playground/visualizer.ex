@@ -240,12 +240,19 @@ if Code.ensure_loaded?(Plug.Router) do
     defp parse_params(params, :unit_input, assigns) do
       deployment_default = default_locale(assigns)
       locale = param_locale(params, "locale", deployment_default)
+      category = blank_default(Map.get(params, "category"), "length")
+
+      unit_input =
+        params
+        |> Map.get("unit_input")
+        |> blank_default(nil)
+        |> reset_stale_unit(category, locale, Map.get(params, "previous_locale"))
 
       %{
         locale: locale,
         deployment_default_locale: deployment_default,
-        category: blank_default(Map.get(params, "category"), "length"),
-        unit_input: blank_default(Map.get(params, "unit_input"), nil)
+        category: category,
+        unit_input: unit_input
       }
     end
 
@@ -405,6 +412,48 @@ if Code.ensure_loaded?(Plug.Router) do
     end
 
     defp validate_calendar(_), do: :gregorian
+
+    # The unit form carries the selected unit on every submit,
+    # including the reactive submits fired by the locale and
+    # category selects. Left alone, switching category to
+    # "mass" keeps "meter" selected and switching locale from
+    # en to de keeps the US "inch" instead of the metric
+    # default. Blank the carried unit in both cases so
+    # `unit_input/1` falls back to the first preferred unit for
+    # the new locale + category.
+    defp reset_stale_unit(%{} = unit_input, category, locale, previous_locale) do
+      if retain_unit?(Map.get(unit_input, "unit"), category, locale, previous_locale) do
+        unit_input
+      else
+        Map.put(unit_input, "unit", "")
+      end
+    end
+
+    defp reset_stale_unit(unit_input, _category, _locale, _previous_locale), do: unit_input
+
+    defp retain_unit?(unit, category, locale, previous_locale) do
+      is_binary(unit) and unit != "" and
+        unit_in_category?(unit, category) and
+        locale_unchanged?(locale, previous_locale)
+    end
+
+    # Categories partition the unit space, so a unit that
+    # doesn't resolve to the selected category is stale by
+    # definition. This also covers hand-edited and shared URLs,
+    # which carry no previous state to compare against.
+    # `unit_category/1` reports unparseable and unknown units as
+    # `{:error, _}` rather than raising, so garbage in the query
+    # string falls through to the locale default.
+    defp unit_in_category?(unit, category) do
+      match?({:ok, ^category}, Localize.Unit.unit_category(unit))
+    end
+
+    # `previous_locale` is a hidden field present only on
+    # submits from the form. A hand-typed or shared URL has no
+    # previous state, so its unit is taken at face value.
+    defp locale_unchanged?(_locale, nil), do: true
+    defp locale_unchanged?(_locale, ""), do: true
+    defp locale_unchanged?(locale, previous_locale), do: to_string(locale) == previous_locale
 
     defp default_preferred_currencies, do: [:USD, :EUR, :GBP, :JPY]
 

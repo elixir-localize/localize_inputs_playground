@@ -42,6 +42,12 @@ if Code.ensure_loaded?(Gettext.Backend) do
         Render.escape(base),
         "/unit/input\" class=\"li-form\">",
         ~s(<input type="hidden" name="submitted" value="1">),
+        # Lets the router tell a locale switch from a plain
+        # re-submit, so the unit picker resets to the new
+        # locale's preferred unit instead of keeping the old one.
+        ~s(<input type="hidden" name="previous_locale" value="),
+        Render.escape(to_string(locale)),
+        ~s(">),
         Render.field(
           ~t"Locale",
           Render.locale_select("locale", locale,
