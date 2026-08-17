@@ -2,7 +2,7 @@
 
 A standalone deployment wrapper for [`Localize.Inputs.Playground.Visualizer`](lib/localize/inputs/playground/visualizer.ex) — the locale-aware number input demo that previously lived in the input components library, and has never been published to hex.
 
-The live instance runs at **<https://localize-inputs-playground.fly.dev>**.
+The live instance runs at **<https://inputs.elixir-localize.com>**.
 
 ## What it is
 
