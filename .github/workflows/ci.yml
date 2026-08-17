@@ -109,6 +109,19 @@ jobs:
       - name: Run tests
         run: mix test
 
+      - name: Run credo
+        if: matrix.lint
+        run: mix credo --strict
+
+      # `mix docs` exits 0 even when it emits doc warnings, so
+      # `--warnings-as-errors` is what actually gates broken
+      # references and malformed docstrings.
+      - name: Check docs
+        if: matrix.lint
+        env:
+          MIX_ENV: release
+        run: mix docs --warnings-as-errors
+
       - name: Restore PLT cache
         if: matrix.lint
         uses: actions/cache@v5

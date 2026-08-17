@@ -60,7 +60,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         preferred_currencies_field(preferred),
         live_money_input_field(locale, default_currency, money_input, picker, preferred),
         "<div class=\"li-actions\">",
-        "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse & format" <> "</button>",
+        ~s(<button class="li-btn" type="submit">) <> ~t"Parse & format" <> "</button>",
         "<span class=\"li-hint\">",
         ~t"Try",
         " ",
@@ -255,8 +255,10 @@ if Code.ensure_loaded?(Gettext.Backend) do
           picker && preferred != [] &&
             ~s(  preferred_currencies={#{format_atom_list(preferred)}})
         ]
-        |> Enum.reject(&is_nil/1)
-        |> Enum.reject(&(&1 == false))
+        # The conditional entries above collapse to `nil` or
+        # `false` when they don't apply; only the rendered
+        # attributes are binaries.
+        |> Enum.filter(&is_binary/1)
 
       "<.money_input\n" <> Enum.join(attrs, "\n") <> "\n/>"
     end

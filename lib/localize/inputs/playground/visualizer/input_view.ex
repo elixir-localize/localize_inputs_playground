@@ -40,7 +40,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         ),
         live_number_input_field(locale, number_input),
         "<div class=\"li-actions\">",
-        "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse & format" <> "</button>",
+        ~s(<button class="li-btn" type="submit">) <> ~t"Parse & format" <> "</button>",
         "<span class=\"li-hint\">",
         ~t"Try",
         " ",

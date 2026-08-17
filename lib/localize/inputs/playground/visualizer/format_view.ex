@@ -37,7 +37,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
           hint: ~t"Period as decimal, no grouping — e.g. 1234567.89"
         ),
         "<div class=\"li-actions\">",
-        "<button class=\"li-btn\" type=\"submit\">" <> ~t"Format across locales" <> "</button>",
+        ~s(<button class="li-btn" type="submit">) <> ~t"Format across locales" <> "</button>",
         "</div>",
         "</form>",
         result_table(rows),

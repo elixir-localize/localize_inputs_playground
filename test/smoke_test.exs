@@ -168,9 +168,8 @@ defmodule Localize.Inputs.Playground.SmokeTest do
   defp q(pairs) do
     pairs
     |> Enum.reject(fn {_, v} -> is_nil(v) end)
-    |> Enum.map(fn {k, v} ->
+    |> Enum.map_join("&", fn {k, v} ->
       "#{URI.encode_www_form(to_string(k))}=#{URI.encode_www_form(to_string(v))}"
     end)
-    |> Enum.join("&")
   end
 end

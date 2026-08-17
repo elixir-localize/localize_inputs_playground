@@ -82,7 +82,8 @@ defmodule Localize.Inputs.Playground.MixProject do
       {:plug, "~> 1.15"},
       {:bandit, "~> 1.5"},
       {:ex_doc, "~> 0.30", only: [:dev, :release], runtime: false},
-      {:dialyxir, "~> 1.4", only: :dev, runtime: false}
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ] ++ maybe_json_polyfill()
   end
 

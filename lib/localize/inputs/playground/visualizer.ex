@@ -259,80 +259,15 @@ if Code.ensure_loaded?(Plug.Router) do
     defp parse_params(params, :money_input, assigns) do
       deployment_default = default_locale(assigns)
       locale = param_locale(params, "locale", deployment_default)
-
-      # NEVER call `String.to_atom/1` on URL/form params —
-      # atoms aren't garbage collected and an attacker
-      # spraying unique codes could exhaust the atom table.
-      # Fall back to locale-derived currency for unknown
-      # codes (CLDR-known currencies are already-existing
-      # atoms via the Money/ex_money tables).
-      default_currency =
-        case blank_default(Map.get(params, "default_currency"), nil) do
-          nil ->
-            derive_currency_from_locale(locale)
-
-          code ->
-            try do
-              String.to_existing_atom(code)
-            rescue
-              ArgumentError -> derive_currency_from_locale(locale)
-            end
-        end
-
-      # An empty `"currency"` (the picker's hidden carrier
-      # before the user selects anything) would become the
-      # `:""` atom downstream and crash `Money.Input.Components`.
-      # Fall back to the default whenever the form hasn't yet
-      # carried a non-empty currency.
-      currency_or_default = fn raw ->
-        case raw do
-          s when is_binary(s) and s != "" -> s
-          _ -> to_string(default_currency)
-        end
-      end
-
-      money_input =
-        case Map.get(params, "money_input") do
-          %{} = map ->
-            %{
-              "amount" => Map.get(map, "amount") || "",
-              "currency" => currency_or_default.(Map.get(map, "currency"))
-            }
-
-          str when is_binary(str) and str != "" ->
-            %{"amount" => str, "currency" => to_string(default_currency)}
-
-          _ ->
-            nil
-        end
-
-      # Default the picker to ON for the initial view; honour
-      # the user's choice once the form has been submitted.
-      # The form always carries `submitted=1`, so its absence
-      # marks a first visit.
-      picker =
-        case Map.get(params, "submitted") do
-          nil -> true
-          _ -> Map.get(params, "picker") == "1"
-        end
-
-      # Sensible default: USD/EUR/GBP/JPY (the four most-traded
-      # currencies). On first visit (no `submitted` param) use
-      # the defaults; once the user has submitted, honour
-      # whatever they typed (including emptying the field).
-      preferred =
-        case Map.get(params, "submitted") do
-          nil -> default_preferred_currencies()
-          _ -> parse_preferred_currencies(Map.get(params, "preferred"))
-        end
+      default_currency = money_default_currency(params, locale)
 
       %{
         locale: locale,
         deployment_default_locale: deployment_default,
         default_currency: default_currency,
-        picker: picker,
-        preferred_currencies: preferred,
-        money_input: money_input
+        picker: money_picker(params),
+        preferred_currencies: money_preferred_currencies(params),
+        money_input: money_input_value(params, default_currency)
       }
     end
 
@@ -454,6 +389,72 @@ if Code.ensure_loaded?(Plug.Router) do
     defp locale_unchanged?(_locale, nil), do: true
     defp locale_unchanged?(_locale, ""), do: true
     defp locale_unchanged?(locale, previous_locale), do: to_string(locale) == previous_locale
+
+    # NEVER call `String.to_atom/1` on URL/form params —
+    # atoms aren't garbage collected and an attacker
+    # spraying unique codes could exhaust the atom table.
+    # Fall back to locale-derived currency for unknown
+    # codes (CLDR-known currencies are already-existing
+    # atoms via the Money/ex_money tables).
+    defp money_default_currency(params, locale) do
+      case blank_default(Map.get(params, "default_currency"), nil) do
+        nil ->
+          derive_currency_from_locale(locale)
+
+        code ->
+          try do
+            String.to_existing_atom(code)
+          rescue
+            ArgumentError -> derive_currency_from_locale(locale)
+          end
+      end
+    end
+
+    defp money_input_value(params, default_currency) do
+      case Map.get(params, "money_input") do
+        %{} = map ->
+          %{
+            "amount" => Map.get(map, "amount") || "",
+            "currency" => money_currency(Map.get(map, "currency"), default_currency)
+          }
+
+        amount when is_binary(amount) and amount != "" ->
+          %{"amount" => amount, "currency" => to_string(default_currency)}
+
+        _ ->
+          nil
+      end
+    end
+
+    # An empty `"currency"` (the picker's hidden carrier
+    # before the user selects anything) would become the
+    # `:""` atom downstream and crash `Money.Input.Components`.
+    # Fall back to the default whenever the form hasn't yet
+    # carried a non-empty currency.
+    defp money_currency(raw, _default) when is_binary(raw) and raw != "", do: raw
+    defp money_currency(_raw, default), do: to_string(default)
+
+    # Default the picker to ON for the initial view; honour
+    # the user's choice once the form has been submitted.
+    # The form always carries `submitted=1`, so its absence
+    # marks a first visit.
+    defp money_picker(params) do
+      case Map.get(params, "submitted") do
+        nil -> true
+        _ -> Map.get(params, "picker") == "1"
+      end
+    end
+
+    # Sensible default: USD/EUR/GBP/JPY (the four most-traded
+    # currencies). On first visit (no `submitted` param) use
+    # the defaults; once the user has submitted, honour
+    # whatever they typed (including emptying the field).
+    defp money_preferred_currencies(params) do
+      case Map.get(params, "submitted") do
+        nil -> default_preferred_currencies()
+        _ -> parse_preferred_currencies(Map.get(params, "preferred"))
+      end
+    end
 
     defp default_preferred_currencies, do: [:USD, :EUR, :GBP, :JPY]
 

@@ -192,7 +192,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         Render.field(~t"Calendar", calendar_select(calendar, locale)),
         date_field(variant, value, locale, calendar),
         "<div class=\"li-actions\">",
-        "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse" <> "</button>",
+        ~s(<button class="li-btn" type="submit">) <> ~t"Parse" <> "</button>",
         "</div>",
         "</form>"
       ]

@@ -58,7 +58,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         Render.field(~t"Category", category_select(category)),
         live_unit_input_field(category, unit_input, locale, unit_data),
         "<div class=\"li-actions\">",
-        "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse & format" <> "</button>",
+        ~s(<button class="li-btn" type="submit">) <> ~t"Parse & format" <> "</button>",
         "</div>",
         "</form>",
         "</section>",

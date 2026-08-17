@@ -30,7 +30,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         ~s(" autocomplete="off"></label>),
         "</div>",
         "<div class=\"li-actions\">",
-        "<button class=\"li-btn\" type=\"submit\">" <> ~t"Parse across locales" <> "</button>",
+        ~s(<button class="li-btn" type="submit">) <> ~t"Parse across locales" <> "</button>",
         "<span class=\"li-hint\">",
         ~t"Try <code>1,234.56</code>, <code>1.234,56</code>, <code>1 234,56</code>, <code>(1234.56)</code>",
         "</span>",
