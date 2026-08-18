@@ -8,6 +8,9 @@ if Code.ensure_loaded?(Gettext.Backend) do
     # Money.Input.Visualizer.Render so the two apps feel
     # identical.
 
+    @source_url "https://github.com/elixir-localize/localize_inputs_playground"
+    @repo_label "github.com/elixir-localize/localize_inputs_playground"
+
     @doc "HTML-escapes a binary or iodata."
     @spec escape(iodata() | term()) :: iodata()
     def escape(iodata) when is_list(iodata), do: Enum.map(iodata, &escape/1)
@@ -37,7 +40,7 @@ if Code.ensure_loaded?(Gettext.Backend) do
         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
         "<title>",
         escape(title),
-        " — Localize.Inputs.Playground.Visualizer</title>",
+        " — Localize Inputs Playground</title>",
         "<link rel=\"stylesheet\" href=\"",
         escape(base),
         "/assets/localize_inputs.css\">",
@@ -114,18 +117,25 @@ if Code.ensure_loaded?(Gettext.Backend) do
       [
         "<header class=\"li-header\">",
         "<div class=\"li-header-top\">",
-        "<a class=\"li-brand\" href=\"",
+        ~s(<div class="li-brand">),
+        ~s(<a class="li-brand-home" href="),
         escape(base),
-        "/\">",
-        "<img class=\"li-logo\" src=\"",
+        ~s(/">),
+        ~s(<img class="li-logo" src="),
         escape(base),
-        "/assets/logo.png\" alt=\"\" width=\"40\" height=\"40\">",
-        "<div class=\"li-brand-text\">",
-        "<h1>Localize.Inputs.Playground.Visualizer</h1>",
-        "<p>" <>
-          escape(~t"locale-aware form inputs — try how they behave across locales") <> "</p>",
-        "</div>",
+        ~s(/assets/logo.png" alt="" width="40" height="40">),
         "</a>",
+        ~s(<div class="li-brand-text">),
+        ~s(<h1><a class="li-brand-home" href="),
+        escape(base),
+        ~s(/">Localize Inputs Playground</a></h1>),
+        ~s(<p><a class="li-repo" href="),
+        @source_url,
+        ~s(">),
+        @repo_label,
+        "</a></p>",
+        "</div>",
+        "</div>",
         theme_toggle(),
         "</div>",
         # Top-level: input family.

@@ -29,7 +29,7 @@ msgstr ""
 #: lib/localize/inputs/playground/visualizer/date_input_view.ex:504
 #: lib/localize/inputs/playground/visualizer/input_view.ex:135
 #: lib/localize/inputs/playground/visualizer/money_input_view.ex:236
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:177
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:183
 #, elixir-autogen, icu-format
 msgid "Component code"
 msgstr ""
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:95
+#: lib/localize/inputs/playground/visualizer/render.ex:98
 #, elixir-autogen, icu-format
 msgid "Format"
 msgstr ""
@@ -73,10 +73,10 @@ msgstr ""
 #: lib/localize/inputs/playground/visualizer/input_view.ex:190
 #: lib/localize/inputs/playground/visualizer/input_view.ex:199
 #: lib/localize/inputs/playground/visualizer/parse_view.ex:27
-#: lib/localize/inputs/playground/visualizer/render.ex:93
-#: lib/localize/inputs/playground/visualizer/render.ex:100
+#: lib/localize/inputs/playground/visualizer/render.ex:96
 #: lib/localize/inputs/playground/visualizer/render.ex:103
-#: lib/localize/inputs/playground/visualizer/render.ex:107
+#: lib/localize/inputs/playground/visualizer/render.ex:106
+#: lib/localize/inputs/playground/visualizer/render.ex:110
 #, elixir-autogen, icu-format
 msgid "Input"
 msgstr ""
@@ -87,8 +87,8 @@ msgstr ""
 #: lib/localize/inputs/playground/visualizer/locale_view.ex:32
 #: lib/localize/inputs/playground/visualizer/money_input_view.ex:47
 #: lib/localize/inputs/playground/visualizer/parse_view.ex:50
-#: lib/localize/inputs/playground/visualizer/render.ex:96
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:46
+#: lib/localize/inputs/playground/visualizer/render.ex:99
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:52
 #, elixir-autogen, icu-format
 msgid "Locale"
 msgstr ""
@@ -109,14 +109,14 @@ msgid "Number Input Component"
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/date_input_view.ex:195
-#: lib/localize/inputs/playground/visualizer/render.ex:94
+#: lib/localize/inputs/playground/visualizer/render.ex:97
 #, elixir-autogen, icu-format
 msgid "Parse"
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/input_view.ex:43
 #: lib/localize/inputs/playground/visualizer/money_input_view.ex:63
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:55
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:61
 #, elixir-autogen, icu-format
 msgid "Parse & format"
 msgstr ""
@@ -147,7 +147,7 @@ msgid "Amount (canonical form)"
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/input_view.ex:193
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:302
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:304
 #, elixir-autogen, icu-format
 msgid "Blur format"
 msgstr ""
@@ -158,8 +158,8 @@ msgid "Canonical wire value"
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/input_view.ex:200
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:310
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:243
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:312
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:249
 #, elixir-autogen, icu-format
 msgid "Error"
 msgstr ""
@@ -170,7 +170,7 @@ msgid "Number input"
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/input_view.ex:191
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:234
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:240
 #, elixir-autogen, icu-format
 msgid "Parsed (Decimal)"
 msgstr ""
@@ -187,7 +187,7 @@ msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/date_input_view.ex:506
 #: lib/localize/inputs/playground/visualizer/input_view.ex:137
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:179
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:185
 #, elixir-autogen, icu-format
 msgid "The HEEx call site that renders the input above. Copy straight into a LiveView template."
 msgstr ""
@@ -204,8 +204,8 @@ msgid "Try <code>1,234.56</code>, <code>1.234,56</code>, <code>1 234,56</code>, 
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/input_view.ex:194
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:304
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:236
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:306
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:242
 #, elixir-autogen, icu-format
 msgid "Validation"
 msgstr ""
@@ -220,30 +220,30 @@ msgstr ""
 msgid "phx-hook=\"NumberInput\" — wraps AutoNumeric when present"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:232
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:241
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:238
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:247
 #, elixir-autogen, icu-format
 msgid "Amount"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:52
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:58
 #, elixir-autogen, icu-format
 msgid "Category"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:84
+#: lib/localize/inputs/playground/visualizer/render.ex:87
 #, elixir-autogen, icu-format
 msgid "Number"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:205
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:211
 #, elixir-autogen, icu-format
 msgid "Resolved unit data"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:85
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:233
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:242
+#: lib/localize/inputs/playground/visualizer/render.ex:88
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:239
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:248
 #, elixir-autogen, icu-format
 msgid "Unit"
 msgstr ""
@@ -254,27 +254,22 @@ msgid "Unit Input Component"
 msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/date_input_view.ex:239
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:131
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:137
 #, elixir-autogen, icu-format
 msgid "Value"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:126
-#, elixir-autogen, icu-format
-msgid "locale-aware form inputs — try how they behave across locales"
-msgstr ""
-
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:135
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:141
 #, elixir-autogen, icu-format
 msgid "phx-hook=\"NumberInput\" + phx-hook=\"UnitPicker\" — locale-formatted amount, searchable picker"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:59
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:65
 #, elixir-autogen, icu-format
 msgid "unit_input result"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:235
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:241
 #, elixir-autogen, icu-format
 msgid "Constructed Unit"
 msgstr ""
@@ -294,7 +289,7 @@ msgstr ""
 msgid "Calendar"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:300
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:302
 #, elixir-autogen, icu-format
 msgid "Cast to Money"
 msgstr ""
@@ -309,7 +304,7 @@ msgstr ""
 msgid "Currency picker"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:87
+#: lib/localize/inputs/playground/visualizer/render.ex:90
 #, elixir-autogen, icu-format
 msgid "Date"
 msgstr ""
@@ -364,7 +359,7 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:183
+#: lib/localize/inputs/playground/visualizer/render.ex:193
 #, elixir-autogen, icu-format
 msgid "Headless API: <code>Localize.Inputs.Number.Parser</code>, <code>Localize.Inputs.Number.Validator</code>, <code>Localize.Inputs.Number.Symbols</code>, <code>Localize.Inputs.Date.Parser</code>, <code>Localize.Inputs.Date.Validator</code>."
 msgstr ""
@@ -399,12 +394,12 @@ msgstr ""
 msgid "Live HEEx renders of <code>Money.Input.Components.money_input/1</code> and <code>Money.Input.Components.currency_picker/1</code>. For a plain number input (no currency) see the <strong>Number</strong> tab."
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:110
+#: lib/localize/inputs/playground/visualizer/render.ex:113
 #, elixir-autogen, icu-format
 msgid "LiveComponent"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:86
+#: lib/localize/inputs/playground/visualizer/render.ex:89
 #, elixir-autogen, icu-format
 msgid "Money"
 msgstr ""
@@ -419,7 +414,7 @@ msgstr ""
 msgid "Money input"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:303
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:305
 #, elixir-autogen, icu-format
 msgid "Number portion only"
 msgstr ""
@@ -431,12 +426,12 @@ msgstr ""
 
 #: lib/localize/inputs/playground/visualizer/date_input_view.ex:279
 #: lib/localize/inputs/playground/visualizer/date_input_view.ex:319
-#: lib/localize/inputs/playground/visualizer/render.ex:108
+#: lib/localize/inputs/playground/visualizer/render.ex:111
 #, elixir-autogen, icu-format
 msgid "Range"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:109
+#: lib/localize/inputs/playground/visualizer/render.ex:112
 #, elixir-autogen, icu-format
 msgid "Range Picker"
 msgstr ""
@@ -446,7 +441,7 @@ msgstr ""
 msgid "Resolved locale + calendar data"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:275
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:277
 #, elixir-autogen, icu-format
 msgid "Resolved locale + currency data"
 msgstr ""
@@ -456,13 +451,13 @@ msgstr ""
 msgid "Same input, every locale. Demonstrates how <code>Localize.Inputs.Number.Parser</code> interprets the decimal and grouping separators per locale."
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:301
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:303
 #, elixir-autogen, icu-format
 msgid "Stored amount (canonical)"
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:299
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:309
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:301
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:311
 #, elixir-autogen, icu-format
 msgid "Submitted params"
 msgstr ""
@@ -492,7 +487,7 @@ msgstr ""
 msgid "Used when the form value doesn't carry a currency. Maps to the component's `:default_currency` attr."
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/render.ex:379
+#: lib/localize/inputs/playground/visualizer/render.ex:389
 #, elixir-autogen, icu-format
 msgid "View component documentation (opens in a new tab)"
 msgstr ""
@@ -502,12 +497,12 @@ msgstr ""
 msgid "What <code>Localize.Inputs.Number.Symbols.number_for_locale/1</code> returns for the current locale — the data the JS hook reads from <code>data-</code> attributes."
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:207
+#: lib/localize/inputs/playground/visualizer/unit_input_view.ex:213
 #, elixir-autogen, icu-format
 msgid "What <code>Localize.Inputs.Number.Unit.unit_for_locale/2</code> returns for the current locale + category — measurement system, preferred unit list, and the full category catalogue. Names localize via CLDR."
 msgstr ""
 
-#: lib/localize/inputs/playground/visualizer/money_input_view.ex:277
+#: lib/localize/inputs/playground/visualizer/money_input_view.ex:279
 #, elixir-autogen, icu-format
 msgid "What <code>Money.Input.Currency.currency_for_locale/2</code> returns for the current locale + currency combination — the data the JS hook reads from <code>data-</code> attributes."
 msgstr ""

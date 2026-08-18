@@ -90,10 +90,13 @@ defmodule Localize.Inputs.Playground.Visualizer.Assets do
     gap: 1.5rem;
     margin-bottom: 1rem;
   }
-  .li-brand { text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 0.85rem; }
+  .li-brand { display: inline-flex; align-items: center; gap: 0.85rem; }
   .li-brand-text { display: flex; flex-direction: column; }
+  .li-brand-home { text-decoration: none; color: inherit; display: inline-flex; }
   .li-brand h1 { font-size: 1.25rem; margin: 0 0 0.15rem; font-weight: 700; letter-spacing: -0.01em; }
   .li-brand p { color: var(--li-text-dim); margin: 0; font-size: 0.85rem; }
+  .li-repo { color: inherit; text-decoration: none; }
+  .li-repo:hover { color: var(--li-accent); text-decoration: underline; }
   .li-logo { width: 40px; height: 40px; border-radius: 8px; flex: 0 0 auto; box-shadow: var(--li-shadow-sm); }
 
   /* Top-level "input family" nav — pill style to distinguish
